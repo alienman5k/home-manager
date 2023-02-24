@@ -1,0 +1,28 @@
+# Afterglow
+colors: 
+ # Default colors
+ primary:
+   background: '#212121'
+   foreground: '#d0d0d0'
+
+ # Normal colors
+ normal:
+   black:   '#151515'
+   red:     '#ac4142'
+   green:   '#7e8e50'
+   yellow:  '#e5b567'
+   blue:    '#6c99bb'
+   magenta: '#9f4e85'
+   cyan:    '#7dd6cf'
+   white:   '#d0d0d0'
+
+ # Bright colors
+ bright:
+   black:   '#505050'
+   red:     '#ac4142'
+   green:   '#7e8e50'
+   yellow:  '#e5b567'
+   blue:    '#6c99bb'
+   magenta: '#9f4e85'
+   cyan:    '#7dd6cf'
+   white:   '#f5f5f5'

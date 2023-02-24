@@ -1,0 +1,28 @@
+# Dracula
+colors:
+  # Default colors
+  primary:
+    background: '#282c34'
+    foreground: '#bbc2cf'
+
+  # Normal colors
+  normal:
+    black:   '#000000'
+    red:     '#ff6c6b'
+    green:   '#98be65'
+    yellow:  '#ecbe7b'
+    blue:    '#a9a1e1'
+    magenta: '#c678dd'
+    cyan:    '#51afef'
+    white:   '#bbc2cf'
+
+  # Bright colors
+  bright:
+    black:   '#000000'
+    red:     '#ff6655'
+    green:   '#99bb66'
+    yellow:  '#ecbe7b'
+    blue:    '#a9a1e1'
+    magenta: '#c678dd'
+    cyan:    '#51afef'
+    white:   '#bfbfbf'
