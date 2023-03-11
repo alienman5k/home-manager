@@ -175,6 +175,12 @@ The configuration below is to change anything related to how Emacs UI is rendere
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (desktop-save-mode 0) ;; Restore last window confifuration, ie. tabs.
 #+end_src
+** Line numbers
+#+begin_src emacs-lisp
+(custom-set-variables
+ '(display-line-numbers-type 'relative))
+(global-display-line-numbers-mode 1)
+#+end_src
 ** Settings for GUI mode
 #+begin_src emacs-lisp
 (when (display-graphic-p)
@@ -275,6 +281,8 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>ht") 'consult-theme)
   (evil-mode 1))
 #+end_src
 *** Evil Collection

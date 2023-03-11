@@ -31,6 +31,17 @@ function proxy_off() {
   echo -e "Proxy settings removed"
 }
 
+function nix-hm-proxy() {
+  if [ "on" = "$1" ]; then
+      HTTP_PROXY="http://www-proxy.us.oracle.com:80"
+      sudo launchctl setenv https_proxy $HTTP_PROXY http_proxy $HTTP_PROXY
+  else 
+      sudo launchctl unsetenv https_proxy http_proxy 
+  fi
+  sudo launchctl kickstart -k system/org.nixos.nix-daemon
+}
+
+
 
 export JDK_BASE=/Library/Java/JavaVirtualMachines
 function switch-java() {

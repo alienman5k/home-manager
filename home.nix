@@ -20,20 +20,22 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    gitui
-    wget
     alacritty
-    tmux
-    fzf
-    jq
+    cargo
     fd
-    p7zip
-    ripgrep
+    fzf
+    gitui
+    gradle
+    jq
     maven
-    plantuml
-    # pass
-    # youtube-dl
     nodejs
+    p7zip
+    plantuml
+    ripgrep
+    rustc
+    tmux
+    html-tidy
+    wget
     #Fonts
     fira
     fira-code

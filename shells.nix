@@ -7,7 +7,7 @@
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
     history = {
-      path = ".config/zsh/.zsh_history";
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
       share = true;
       save = 10000;
       size = 10000;
@@ -22,8 +22,9 @@
     
     shellAliases = {
       ll = "ls -ltr --color";
+      lla = "ls -altr --color";
       ".." = "cd ..";
-      vim = "nvim";
+      # vim = "nvim";
       vi = "nvim";
     };
 
@@ -33,6 +34,8 @@
     };
 
     initExtra = ''
+      bindkey "^[[3~" delete-char
+      PATH=$PATH:$HOME/bin
       WORDCHARS=""
       if [[ -f "$HOME/.config/zsh/plugins/functions.plugin.zsh" ]]; then
         source $HOME/.config/zsh/plugins/functions.plugin.zsh
