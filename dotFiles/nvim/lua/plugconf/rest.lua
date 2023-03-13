@@ -1,7 +1,8 @@
 return {
---   -- RestClient
+  -- RestClient
   {
-    "rest-nvim/rest.nvim",
+    -- "rest-nvim/rest.nvim",
+    dir = "/Users/imarmole/git_repos/neovim_plugins/rest.nvim", -- Use local to allow user authentication
     dependencies = { "nvim-lua/plenary.nvim" },
     ft = { "rest", "http" },
     opts = {

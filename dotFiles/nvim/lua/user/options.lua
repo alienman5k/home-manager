@@ -12,7 +12,3 @@ vim.o.expandtab = true
 -- vim.o.number = true
 vim.o.relativenumber = true
 -- vim.o.hidden = true
-
-function P(table)
-  print(vim.inspect(table))
-end
