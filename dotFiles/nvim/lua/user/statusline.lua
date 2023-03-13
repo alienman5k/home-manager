@@ -1,24 +1,27 @@
-local fn = vim.fn
+-- local fn = vim.fn
 local o = vim.o
 local cmd = vim.cmd
 
-local function highlight(group, fg, bg)
+local M = {}
+
+
+M.highlight = function(group, fg, bg)
   cmd("highlight " .. group .. " guifg=" .. fg .. " guibg=" .. bg)
 end
 
-highlight("StatusLeft", "blue", "#32344a")
-highlight("StatusMid", "green", "#32344a")
-highlight("StatusRight", "yellow", "#32344a")
+M.highlight("StatusLeft", "blue", "#32344a")
+M.highlight("StatusMid", "green", "#32344a")
+M.highlight("StatusRight", "yellow", "#32344a")
 
 -- local function get_column_number()
 --     return fn.col(".")
 -- end
 
-local function mode()
-  return string.format(" [%s] ", vim.api.nvim_get_mode().mode):upper()
+M.mode = function()
+  return string.format(" [%s] ", string.upper(vim.api.nvim_get_mode().mode))
 end
 
-local function lsp()
+M.lsp = function()
   local count = {}
   local levels = {
     errors = "Error",
@@ -37,16 +40,16 @@ local function lsp()
   local info = ""
 
   if count["errors"] ~= 0 then
-    errors = " %#LspDiagnosticsSignError# " .. count["errors"]
+    errors = " %#LspDiagnosticsSignError#⛔ " .. count["errors"]
   end
   if count["warnings"] ~= 0 then
-    warnings = " %#LspDiagnosticsSignWarning# " .. count["warnings"]
+    warnings = " %#LspDiagnosticsSignWarning#⚠ " .. count["warnings"]
   end
   if count["hints"] ~= 0 then
-    hints = " %#LspDiagnosticsSignHint# " .. count["hints"]
+    hints = " %#LspDiagnosticsSignHint#⚐ " .. count["hints"]
   end
   if count["info"] ~= 0 then
-    info = " %#LspDiagnosticsSignInformation# " .. count["info"]
+    info = " %#LspDiagnosticsSignInformation#ⓘ " .. count["info"]
   end
 
   -- return ## errors .. warnings .. hints .. info .. "%#Normal#"
@@ -54,9 +57,7 @@ local function lsp()
 end
 
 
-StatusLine = {}
-
-function StatusLine.show()
+M.show_statusline = function()
   -- return table.concat {
   --     "%#StatusLeft#",
   --     "%f",
@@ -70,11 +71,11 @@ function StatusLine.show()
   -- }
   return table.concat {
     -- "%#StatusLeft#",
-    mode(), -- NeoVim mode
+    M.mode(), -- NeoVim mode
     "%f ", -- File Path
     "%m ",
     "%r ",
-    lsp(),
+    M.lsp(),
     -- "%#StatusMid#",
     "%=",
     "%q",
@@ -84,7 +85,6 @@ function StatusLine.show()
     "%5.5p%%",
     " %y ",
   }
-
 end
 
-o.statusline = "%!luaeval('StatusLine.show()')"
+o.statusline = "%!luaeval('M.show_statusline()')"
