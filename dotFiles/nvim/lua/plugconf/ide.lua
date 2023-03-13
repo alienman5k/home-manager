@@ -155,6 +155,18 @@ local function lsp_setup()
     --   bufmap("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, bufopts)
     -- end
   }
+
+  -- Configuration for RUST
+  lspconfig.rust_analyzer.setup{
+    settings = {
+      ['rust-analyzer'] = {
+        diagnostics = {
+          enable = false;
+        }
+      }
+    }
+  }
+
 end
 
 local function dap_setup()
