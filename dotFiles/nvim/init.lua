@@ -2,6 +2,7 @@ ColorScheme = 'gruvbox'
 vim.o.background = "dark"
 
 require('user.options')
+require('user.utils')
 require('user.keymap')
 -- require('user.packer')
 require('user.lazyvim')
