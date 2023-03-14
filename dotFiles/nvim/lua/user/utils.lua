@@ -8,5 +8,5 @@ end
 -- Reloads a module
 R = function (module)
   package.loaded[module] = nil
-  require"rest-client"
+  require(module)
 end

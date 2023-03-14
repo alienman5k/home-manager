@@ -1,4 +1,3 @@
--- local fn = vim.fn
 local o = vim.o
 local cmd = vim.cmd
 
@@ -13,9 +12,6 @@ M.highlight("StatusLeft", "blue", "#32344a")
 M.highlight("StatusMid", "green", "#32344a")
 M.highlight("StatusRight", "yellow", "#32344a")
 
--- local function get_column_number()
---     return fn.col(".")
--- end
 
 M.mode = function()
   return string.format(" [%s] ", string.upper(vim.api.nvim_get_mode().mode))
@@ -56,19 +52,8 @@ M.lsp = function()
   return errors .. warnings .. hints .. info
 end
 
-
-M.show_statusline = function()
-  -- return table.concat {
-  --     "%#StatusLeft#",
-  --     "%f",
-  --     "%=",
-  --     "%#StatusMid#",
-  --     "%l,",
-  --     get_column_number(),
-  --     "%=",
-  --     "%#StatusRight#",
-  --     "%p%%"
-  -- }
+StatusLine = {}
+StatusLine.show = function()
   return table.concat {
     -- "%#StatusLeft#",
     M.mode(), -- NeoVim mode
@@ -87,4 +72,4 @@ M.show_statusline = function()
   }
 end
 
-o.statusline = "%!luaeval('M.show_statusline()')"
+o.statusline = "%!luaeval('StatusLine.show()')"
