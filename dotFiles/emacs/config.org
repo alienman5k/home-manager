@@ -257,6 +257,7 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :custom
   (org-edit-src-content-indentation 0)
   (org-ellipsis " ↘")
+  (org-export-backends '(ascii html odt md))
   (org-confirm-babel-evaluate
 	(lambda (lang body)
 	  (and (not (string= lang "emacs-lisp"))
