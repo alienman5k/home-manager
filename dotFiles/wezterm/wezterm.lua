@@ -24,6 +24,7 @@ wezterm.on('window-restore', function (window, _)
   window:restore()
   -- window:toast_notification('restore', 'Window restored', nil, 2000)
 end)
+-- Toggling seems more complicated, where can we save state?
 wezterm.on('toggle-maximize', function (window, _)
   local maxed = window['maxed']
   window:toast_notification('toggle-maximize', 'maximized: ' .. maxed, nil, 2000)
@@ -39,13 +40,11 @@ end)
 
 
 config.color_scheme = 'Gruvbox Dark'
-
 -- Font Configuration
 config.font_size = 14;
-
 -- Window Opacity
 config.window_decorations = "RESIZE";
-config.window_background_opacity = 0.9;
+config.window_background_opacity = 0.92;
 config.window_padding = {
   top = "1cell",
   bottom = "1pt",
@@ -58,17 +57,12 @@ config.hide_tab_bar_if_only_one_tab = true;
 -- Keybindings
 config.keys = {
   {
-    key = 'F10',
-    mods = 'ALT',
-    action = wezterm.action.ToggleFullScreen,
-  },
-  {
-    key = "/",
+    key = "|",
     mods = 'SUPER',
     action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
   },
   {
-    key = "'",
+    key = "_",
     mods = 'SUPER',
     action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
@@ -85,7 +79,7 @@ config.keys = {
   {
     key = "Enter",
     mods = 'SUPER|CTRL',
-    action = wezterm.action.EmitEvent('toggle-maximize')
+    action = wezterm.action.EmitEvent('toggle-maximize') -- Not working needs to be reviewed
   },
 };
 
