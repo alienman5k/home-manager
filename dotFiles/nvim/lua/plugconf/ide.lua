@@ -242,6 +242,14 @@ return {
       lsp_setup()
     end
   },
+  -- Java Decompiler
+  {
+    "alienman5k/jdecomp.nvim",
+    opts = {
+      decompiler = 'cfr'
+    },
+  },
+
   -- Auto completion of words
   {
     "hrsh7th/nvim-cmp",

@@ -22,10 +22,12 @@
   home.packages = with pkgs; [
     alacritty
     cargo
+    cfr
     fd
     fzf
     gitui
     gradle
+    jd-gui
     jq
     maven
     nodejs
@@ -87,6 +89,6 @@
   imports = [
     ./shells.nix
     ./editors.nix
-    # ./terminal.nix
+    ./terminals.nix
   ];
 }

@@ -32,6 +32,7 @@ alias docker=podman
 alias doom_emacs="emacs --with-profile doom-ide"
 alias vi="nvim"
 alias v="nvim"
+alias sopen='fd | fzf-tmux -p | xargs $EDITOR'
 # https://www.atlassian.com/git/tutorials/dotfiles
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias lcfg='lazygit --git-dir=$HOME/.cfg --work-tree=$HOME'

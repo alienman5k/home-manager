@@ -12,3 +12,11 @@ vim.o.expandtab = true
 -- vim.o.number = true
 vim.o.relativenumber = true
 -- vim.o.hidden = true
+
+-- Highlight text when on yank
+vim.api.nvim_create_autocmd({"TextYankPost"}, {
+  pattern = "*",
+  callback = function ()
+    vim.highlight.on_yank({higroup="IncSearch", timeout=200})
+  end
+})
