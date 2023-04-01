@@ -35,6 +35,7 @@
     plantuml
     ripgrep
     rustc
+    rust-analyzer
     tmux
     html-tidy
     wget
