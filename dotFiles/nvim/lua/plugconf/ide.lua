@@ -7,19 +7,16 @@ local function cmp_setup()
     snippet = {
       -- required - you must specify a snippet engine
       expand = function(args)
-        --vim.fn["vsnip#anonymous"](args.body) -- for `vsnip` users.
         require("luasnip").lsp_expand(args.body) -- for `luasnip` users.
-        -- require("snippy").expand_snippet(args.body) -- for `snippy` users.
-        -- vim.fn["ultisnips#anon"](args.body) -- for `ultisnips` users.
       end,
     },
     formatting = {
       format = require("lspkind").cmp_format {
         with_text = true,
         menu = {
-          buffer = "[buf]",
           nvim_lsp = "[lsp]",
           nvim_lua = "[api]",
+          buffer = "[buf]",
           path = "[path]",
           luasnip = "[snip]",
           -- gh_issues = "[issues]",
@@ -57,6 +54,7 @@ local function cmp_setup()
     sources = cmp.config.sources({
       { name = "nvim_lua" },
       { name = "nvim_lsp" },
+      { name = 'nvim_lsp_signature_help' },
       { name = "luasnip" },
       { name = "buffer", keyword_length = 3 },
       { name = "path" },
@@ -158,10 +156,11 @@ local function lsp_setup()
 
   -- Configuration for RUST
   lspconfig.rust_analyzer.setup{
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
     settings = {
       ['rust-analyzer'] = {
         diagnostics = {
-          enable = false;
+          enable = true;
         }
       }
     }
@@ -256,6 +255,7 @@ return {
     -- event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
