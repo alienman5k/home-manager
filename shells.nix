@@ -110,8 +110,8 @@
       bind -r l select-pane -R 
 
       # Switch windows
-      bind -r N swap-window -t +1 next-window
-      bind -r P swap-window -t -1 previous-window
+      bind -r N swap-window -t +1 \; next-window
+      bind -r P swap-window -t -1 \; previous-window
     '';
   };
 

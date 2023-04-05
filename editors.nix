@@ -20,7 +20,7 @@
 
 
   programs.helix = {
-    enable = false;
+    enable = true;
     settings = {
       theme = "gruvbox";
       editor = {

@@ -36,6 +36,7 @@
     ripgrep
     rustc
     rust-analyzer
+    rustfmt
     tmux
     html-tidy
     wget
