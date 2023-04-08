@@ -254,6 +254,7 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :straight (:type built-in)
   ;; :mode "\\.org\\'"
   ;; :commands org-mode
+  :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   :custom
   (org-edit-src-content-indentation 0)
   (org-ellipsis " ↘")
@@ -563,6 +564,10 @@ Git in Emacs
   :if (eq system-type 'darwin)
   :config
   (ns-auto-titlebar-mode))
+#+end_src
+** Verb (REST Client minor mode for Org)
+#+begin_src elisp
+(use-package verb)
 #+end_src
 * Programming Languages & Tools
 ** Customize Major Modes
