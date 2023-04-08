@@ -1,13 +1,12 @@
 ColorScheme = 'gruvbox'
 vim.o.background = "dark"
 
-require('user.options')
-require('user.utils')
-require('user.keymap')
--- require('user.packer')
-require('user.lazyvim')
-require('user.statusline')
-require('user.filetypes')
+require('user.core.options')
+require('user.core.utils')
+require('user.core.keymap')
+require('user.core.statusline')
+require('user.core.filetypes')
+require('user.plugins.lazyvim')
 
 -- Chage apperance if exists
 vim.cmd('silent! colorscheme ' .. ColorScheme)
