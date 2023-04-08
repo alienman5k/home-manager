@@ -1,73 +1,11 @@
-local function cmp_setup()
-  local ok, cmp = pcall(require, "cmp")
-  if not ok or cmp == nil then
-    return
-  end
-  cmp.setup({
-    snippet = {
-      -- required - you must specify a snippet engine
-      expand = function(args)
-        require("luasnip").lsp_expand(args.body) -- for `luasnip` users.
-      end,
-    },
-    formatting = {
-      format = require("lspkind").cmp_format {
-        with_text = true,
-        menu = {
-          nvim_lsp = "[lsp]",
-          nvim_lua = "[api]",
-          buffer = "[buf]",
-          path = "[path]",
-          luasnip = "[snip]",
-          -- gh_issues = "[issues]",
-          -- tn = "[tabnine]",
-        },
-      },
-    },
-    mapping = cmp.mapping.preset.insert({
-      ["<c-b>"] = cmp.mapping.scroll_docs(-4),
-      ["<c-f>"] = cmp.mapping.scroll_docs(4),
-      ["<c-space>"] = cmp.mapping.complete(),
-      ["<c-e>"] = cmp.mapping.abort(),
-      ["<cr>"] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
-      ["<c-n>"] = {
-        c = function(fallback)
-          local _cmp = require("cmp")
-          if _cmp and _cmp.visible() then
-            _cmp.select_next_item()
-          else
-            fallback()
-          end
-        end,
-      },
-      ["<c-p>"] = {
-        c = function(fallback)
-          local _cmp = require("cmp")
-          if _cmp and _cmp.visible() then
-            _cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end,
-      },
-    }),
-    sources = cmp.config.sources({
-      { name = "nvim_lua" },
-      { name = "nvim_lsp" },
-      { name = 'nvim_lsp_signature_help' },
-      { name = "luasnip" },
-      { name = "buffer", keyword_length = 3 },
-      { name = "path" },
-    }),
-  })
-end
-
-local function lsp_setup()
   local ok, lspconfig = pcall(require, "lspconfig")
   if not ok then
     return
   end
 
+local M = {}
+
+M.lsp_setup = function ()
   local function get_opts (desc)
     return { noremap = true, silent = true, desc = desc }
   end
@@ -165,12 +103,12 @@ local function lsp_setup()
       }
     }
   }
-
 end
 
-local function dap_setup()
-  local ok, widgets = pcall(require, 'dap.ui.widgets')
-  if not ok then
+
+M.dap_setup = function()
+  local l_ok, widgets = pcall(require, 'dap.ui.widgets')
+  if not l_ok then
     print('dap.ui.widgets not loaded')
     return
   end
@@ -178,9 +116,9 @@ local function dap_setup()
   local opts = { buffer = 0, noremap = true, silent = true }
   -- Mappings
   -- local widgets = require('dap.ui.widgets')
-  local ok, wc = pcall(require, 'which-key')
-  if ok then
-    print("register which-key for dap")
+  local l_ok, wc = pcall(require, 'which-key')
+  if l_ok then
+    -- print("register which-key for dap")
     wc.register({
       ["<leader>d"] = { name = "+Debugger" }
     })
@@ -188,7 +126,7 @@ local function dap_setup()
 
   local map = vim.keymap.set
 
-  print('Configuring dap_setup')
+  -- print('Configuring dap_setup')
 
   map('n', '<leader>dk', widgets.hover, { desc = 'Show Expression' })
   -- map('n', '<leader>wk', function() widgets.cursor_float(widgets.expression).open() end, opts)
@@ -197,79 +135,7 @@ local function dap_setup()
   map('n', '<leader>df', function() widgets.centered_float(widgets.frames).open() end, { desc = 'Show Frames' })
   map('n', '<leader>dt', function() widgets.centered_float(widgets.threads).open() end, opts, { desc = 'Show Threads' })
 
-  print('End dap_setup')
+  -- print('End dap_setup')
 end
 
--- End configuration for ide related plugins
-
--- IDE related plugings managed by LazyVim
-return {
-  -- Convert regions to comments for different file types
-  {
-    "numToStr/Comment.nvim",
-    event = "BufWinEnter",
-    config = function()
-      require("Comment").setup()
-    end
-  },
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end
-  },
-  -- Language Server Protocol default configurations for Neovim
-  {
-    "neovim/nvim-lspconfig", -- Configurations for Nvim LSP
-    dependencies = {
-      -- "mfussenegger/nvim-dap", -- LSP Debugging
-      -- "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
-      {
-        "mfussenegger/nvim-dap", -- LSP Debugging
-        -- dependencies = "rcarriga/nvim-dap-ui",
-        config = function()
-          -- dap_setup()
-        end
-      },
-      {
-        "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
-        -- ft = "java",
-      },
-    },
-    config = function()
-      -- require("user.lspconf")
-      lsp_setup()
-    end
-  },
-  -- Java Decompiler
-  {
-    "alienman5k/jdecomp.nvim",
-    opts = {
-      decompiler = 'cfr'
-    },
-  },
-
-  -- Auto completion of words
-  {
-    "hrsh7th/nvim-cmp",
-    -- event = "InsertEnter",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lua",
-      --"hrsh7th/cmp-cmdline",
-      "onsails/lspkind.nvim",
-    },
-    config = function()
-      cmp_setup()
-    end
-  },
-  -- End Completion
-  -- Snippets
-  {
-    "L3MON4D3/LuaSnip",
-    event = "BufWinEnter"
-  },
-}
+return M

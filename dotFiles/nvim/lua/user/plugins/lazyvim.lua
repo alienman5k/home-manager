@@ -13,4 +13,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- End Bootstrap
 
-require("lazy").setup("plugconf") -- any lua file in ~/.config/nvim/lua/plugconf/*.lua will be automatically merged in the main plugin spec
+require("lazy").setup("user/plugins/lazy") -- any lua file in ~/.config/nvim/lua/plugconf/*.lua will be automatically merged in the main plugin spec
