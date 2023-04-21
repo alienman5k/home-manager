@@ -19,8 +19,9 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Home Manage Search Options link: https://mipmip.github.io/home-manager-option-search/
+
   home.packages = with pkgs; [
-    alacritty
     cargo
     cfr
     fd
@@ -80,12 +81,6 @@
     config = {
       theme = "gruvbox-dark";
     };
-  };
-
-  xdg.configFile.alacritty = {
-    recursive = true;
-    source = ./dotFiles/alacritty;
-    target = "alacritty";
   };
 
   imports = [
