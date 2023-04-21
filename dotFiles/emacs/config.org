@@ -214,8 +214,8 @@ The configuration below is to change anything related to how Emacs UI is rendere
 ** Themes
 *** Doom Themes
 #+begin_src emacs-lisp
-(use-package doom-themes)
-(load-theme 'doom-one t)
+(use-package doom-themes
+  :config (load-theme 'doom-one t))
 #+end_src
 *** Change theme accordingly to system theme (light/dark)
 #+begin_src emacs-lisp
@@ -280,6 +280,8 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
+  :custom
+  (evil-undo-system 'undo-redo)
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
@@ -321,16 +323,16 @@ This is a collection of Evil bindings for the parts of Emacs that Evil does not 
 ;; (require 'which-key)
 ;; (which-key-mode 1)
 #+end_src
+** Compat
+Provides Elisp forwards compatibility library.
+#+begin_src emacs-lisp
+(use-package compat)
+#+end_src
 ** Orderless
 #+begin_src emacs-lisp
 (use-package orderless
   :custom
-  (completion-styles '(orderless partial-completion)))
-
-;; (require 'orderless)
-;; (eval-after-load 'orderless
-;;   '(custom-set-variables
-;;     '(completion-styles '(orderless partial-completion))))
+  (completion-styles '(orderless partial-completion basic)))
 #+end_src
 ** Vertico
 #+begin_src emacs-lisp
@@ -417,6 +419,7 @@ https://github.com/minad/cape
   :init
   (cl-pushnew #'cape-dabbrev completion-at-point-functions)
   (cl-pushnew #'cape-file completion-at-point-functions)
+  (cl-pushnew #'cape-elisp-block completion-at-point-functions)
   (cl-pushnew #'cape-keyword completion-at-point-functions)
   (cl-pushnew #'cape-symbol completion-at-point-functions)
   :bind (("C-c p p" . completion-at-point) ;; capf
@@ -427,22 +430,6 @@ https://github.com/minad/cape
          ("C-c p s" . cape-symbol)
          ("C-c p a" . cape-abbrev)
          ("C-c p i" . cape-ispell)))
-
-;; (eval-after-load 'cape
-;;   '(progn
-;;      (cl-pushnew #'cape-dabbrev completion-at-point-functions)
-;;      (cl-pushnew #'cape-file completion-at-point-functions)
-;;      (cl-pushnew #'cape-keyword completion-at-point-functions)
-;;      (cl-pushnew #'cape-symbol completion-at-point-functions)))
-
-;; Remove from the list
-;; (delete #'cape-dabbrev completion-at-point-functions)
-;; (global-set-key (kbd "C-c p p") 'completion-at-point)
-;; (global-set-key (kbd "C-c p d") 'cape-dabbrev)
-;; (global-set-key (kbd "C-c p f") '("File completion" . cape-file))
-;; (global-set-key (kbd "C-c p k") '("Prog Lang Completion" . cape-keyword))
-;; (global-set-key (kbd "C-c p s") '("Elisp Symbol Completion" . cape-symbol))
-;; (global-set-key (kbd "C-c p l") '("Line Completion" . cape-line))
 #+end_src
 ** Tempel
 Create and manage templates. Alternative to yasnippet
@@ -471,6 +458,9 @@ to trigger Temple templates
   :hook
   (prog-mode-hook . am5k/tempel-setup-capf)
   (text-mode-hook . am5k/tempel-setup-capf))
+
+(use-package tempel-collection
+  :after tempel)
 #+end_src
 ** Yasnippet
 #+begin_src emacs-lisp
@@ -650,6 +640,11 @@ Java Decompiler
   :custom
   (python-indent-offset am5k/tab-width))
 #+end_src
+** Rust
+#+begin_src emacs-lisp
+(use-package rust-mode
+  :mode "\\.rs\\'")
+#+end_src 
 ** RestClient
 #+begin_src emacs-lisp
 (use-package restclient
