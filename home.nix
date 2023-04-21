@@ -26,7 +26,6 @@
     cfr
     fd
     fzf
-    gitui
     gradle
     jd-gui
     jq
@@ -74,6 +73,19 @@
       "*~"
       "*.swp"
     ];
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        scrollHeight = 2;
+      };
+    };
+  };
+
+  programs.gitui = {
+    enable = true;
   };
 
   programs.bat =  {
