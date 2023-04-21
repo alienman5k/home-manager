@@ -31,9 +31,9 @@ window:
   # Number of lines/columns (not pixels) in the terminal. The number of columns
   # must be at least `2`, while using a value of `0` for columns and lines will
   # fall back to the window manager's recommended size.
-  #dimensions:
-  #  columns: 0
-  #  lines: 0
+  dimensions:
+    columns: 180
+    lines: 50
 
   # Window position (changes require restart)
   #
@@ -47,9 +47,9 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  #padding:
-  #  x: 2
-  #  y: 2
+  padding:
+    x: 5
+    y: 2
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -63,7 +63,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: full
+  decorations: buttonless
 
   # Background opacity
   #
@@ -119,11 +119,10 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: FiraCode Nerd Font
     family: JetBrains Mono
 
     # The `style` can be specified to pick a specific face.
-    style: Regular
+    style: Light
 
   # Bold font face
   #bold:
@@ -755,6 +754,8 @@ key_bindings:
   # - { key: F,       mods: Alt,   mode: ~Alt,        chars: "\x1bf" }
   - { key: B,       mods: Alt,                          chars: "\x1bb" }
   - { key: F,       mods: Alt,                          chars: "\x1bf" }
+  - { key: Return,       mods: Super,                   action: ToggleMaximized }
+  - { key: Return,       mods: Super|Shift,             action: ToggleFullscreen }
 
   # Vi Mode
   #- { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
