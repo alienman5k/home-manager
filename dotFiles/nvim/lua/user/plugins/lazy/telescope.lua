@@ -26,9 +26,9 @@ return {
     -- Telescope Mapping
     map('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
     map('n', '<leader>f.', function() builtin.find_files({hidden=true}) end, { desc = 'Find files including hidden' })
-    map('n', '<leader>fp', function() builtin.find_files({follow=true}) end, { desc = 'Find files including symlinks' })
+    map('n', '<leader>fl', function() builtin.find_files({follow=true}) end, { desc = 'Find files including symlinks' })
     -- map('n', '<leader>fc', function() builtin.find_files({cwd = '$HOME/.config/nvim/'}) end, { desc = 'Find configuration files' })
-    map('n', '<leader>fc', function() builtin.find_files({cwd = '$HOME/.config/nixpkgs/dotFiles/nvim/'}) end, { desc = 'Find configuration files' })
+    map('n', '<leader>fc', function() builtin.find_files({cwd = '$HOME/.config/home-manager/dotFiles/nvim/'}) end, { desc = 'Find configuration files' })
     -- map('n', '<leader>fd', function()
       --   local dir = vim.fn.input("Enter directory path: ", "", "file")
       --   builtin.find_files({cwd = dir})

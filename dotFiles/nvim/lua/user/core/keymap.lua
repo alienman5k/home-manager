@@ -48,11 +48,8 @@ map('n', '<leader>Y', '"+yg_', {  })
 map({'n', 'v'}, '<leader>p', '"+p', { desc='Paste from Clipboard' })
 map({'v', 'n'}, '<leader>P', '"+P', { desc='' })
 
--- Open Explorer (netwr)
-map({'n'}, '<leader>e', ':Explore<cr>', {  })
-
--- Fold
--- map({'v', 'n'}, '<leader>zf', ':fold<cr>', { desc='Fold' })
+-- Open Explorer (netwr) on Left side
+map({'n'}, '<leader>e', ':Lexplore<cr>', {  })
 
 -- Open Lazy
 map('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'Open LazyVim package manager' })
