@@ -13,6 +13,8 @@ vim.o.expandtab = true
 vim.o.relativenumber = true
 -- vim.o.hidden = true
 
+Jdtl_auto_start = true
+
 -- Highlight text when on yank
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
   pattern = "*",

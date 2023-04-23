@@ -1,7 +1,7 @@
-  local ok, lspconfig = pcall(require, "lspconfig")
-  if not ok then
-    return
-  end
+local ok, lspconfig = pcall(require, "lspconfig")
+if not ok then
+  return
+end
 
 local M = {}
 
@@ -28,34 +28,6 @@ M.lsp_setup = function ()
   map("n", "<leader>fs", '<cmd>Telescope lsp_document_symbols<cr>', get_opts('Document Symbols'))
   map("n", "<leader>fr", '<cmd>Telescope lsp_references<cr>', get_opts('References'))
   map("n", "<C-k>", vim.lsp.buf.signature_help, get_opts('Signature help'))
-  -- map('i', '<C-c>', vim.lsp.buf.completion, get_opts('Buffer completion'))
-
-  -- WIP
-  -- local on_attach_lsp_lua = function(client, bufnr)
-  --   -- Enable completion triggered by <c-x><c-o>
-  --   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  --   -- Mappings.
-  --   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  --   local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  --   vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  --   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = 'Go to declaration', unpack(bufopts) })
-  --   vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = 'Go to definition', unpack(bufopts) })
-  --   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = 'Go to implementation', unpack(bufopts) })
-  --   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = 'Signature help', unpack(bufopts) })
-  --   vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder,
-  --     { desc = 'Add folder to workspace', unpack(bufopts) })
-  --   vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder,
-  --     { desc = 'Remove folder from workspace', unpack(bufopts) })
-  --   vim.keymap.set("n", "<space>wl", function()
-  --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  --   end, { desc = 'List workspace folers', unpack(bufopts) })
-  --   vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  --   vim.keymap.set("n", "<space>cr", vim.lsp.buf.rename, { desc = 'Rename', unpack(bufopts) })
-  --   vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, { desc = 'Actions', unpack(bufopts) })
-  --   vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = 'References', unpack(bufopts) })
-  --   vim.keymap.set({'n', 'v'}, "<space>cf", function() vim.lsp.buf.format { async = true } end,
-  --     { desc = 'Format', unpack(bufopts) })
-  -- end
 
   -- Configuration applies only to Lua LSP
   lspconfig.lua_ls.setup {
@@ -81,15 +53,6 @@ M.lsp_setup = function ()
       },
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     },
-    -- on_attach = on_attach_lsp
-    -- on_attach = function()
-    --   local bufmap = vim.keymap.set
-    --   local bufopts = {buffer = 0}
-    --   bufmap("n", "K", vim.lsp.buf.hover, bufopts)
-    --   bufmap("n", "<leader>la", vim.lsp.buf.code_action, bufopts)
-    --   bufmap("n", "<leader>lr", vim.lsp.buf.rename, bufopts)
-    --   bufmap("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, bufopts)
-    -- end
   }
 
   -- Configuration for RUST
@@ -103,12 +66,18 @@ M.lsp_setup = function ()
       }
     }
   }
+
+  lspconfig.nil_ls.setup({})
+
+  --TODO - move JDTLS initialization here instead of java.lua by adding auto cmd for filetype
+  -- vim.api.nvim_create_augroup("JdtlsGroup")
+
 end
 
 
 M.dap_setup = function()
-  local l_ok, widgets = pcall(require, 'dap.ui.widgets')
-  if not l_ok then
+  local okduw, widgets = pcall(require, 'dap.ui.widgets')
+  if not okduw then
     print('dap.ui.widgets not loaded')
     return
   end
@@ -116,8 +85,8 @@ M.dap_setup = function()
   local opts = { buffer = 0, noremap = true, silent = true }
   -- Mappings
   -- local widgets = require('dap.ui.widgets')
-  local l_ok, wc = pcall(require, 'which-key')
-  if l_ok then
+  local okwk, wc = pcall(require, 'which-key')
+  if okwk then
     -- print("register which-key for dap")
     wc.register({
       ["<leader>d"] = { name = "+Debugger" }

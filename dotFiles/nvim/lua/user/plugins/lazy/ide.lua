@@ -14,29 +14,48 @@ return {
       require("mason").setup()
     end
   },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function ()
+      require("mason-lspconfig").setup({
+        ensure_installed = { "lua_ls", "rust_analyzer", "nil_ls", "jdtls" },
+      })
+    end
+  },
   -- Language Server Protocol default configurations for Neovim
   {
     "neovim/nvim-lspconfig", -- Configurations for Nvim LSP
+    config = function()
+       require("user.plugins.setup.lsp-setup").lsp_setup()
+    end,
     dependencies = {
       -- "mfussenegger/nvim-dap", -- LSP Debugging
       -- "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
       {
         "mfussenegger/nvim-dap", -- LSP Debugging
+        enabled = true,
         -- dependencies = "rcarriga/nvim-dap-ui",
         config = function()
           -- dap_setup()
           require("user.plugins.setup.lsp-setup").dap_setup()
         end
       },
-      {
-        "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
-        -- ft = "java",
-      },
+      -- {
+      --   "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
+      --   enabled = true,
+      --   -- ft = "java",
+      -- },
     },
-    config = function()
-      -- require("user.lspconf")
-       require("user.plugins.setup.lsp-setup").lsp_setup()
-    end
+  },
+  -- LspConfig with jdtls does not implement all Java LS features, JDTLS does
+  {
+    "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
+    enabled = true,
+    ft = "java",
+    -- config = function ()
+    --   require("jdtls-setup")
+    -- end
+
   },
   -- Java Decompiler
   {
