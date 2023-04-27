@@ -605,23 +605,7 @@ Git in Emacs
 (add-hook 'java-mode-hook 'am5k/java-hook)
 
 #+end_src
-*** JavaScript
-#+begin_src emacs-lisp
-(use-package js
-  :mode ("\\.json[5]\\'" . js-mode)
-  :commands js-mode
-  :bind
-  (:map js-mode-map
-	("C-c C-f" . json-pretty-print-buffer))
-  :custom
-  (js-indent-level am5k/tab-width))
-#+end_src
-*** Nix
-#+begin_src elisp
-(use-package nix-mode
-  :mode "\\.nix\\'")
-#+end_src
-** JDecomp
+**** JDecomp
 Java Decompiler
 #+begin_src emacs-lisp
 (use-package jdecomp
@@ -633,18 +617,36 @@ Java Decompiler
      (fernflower . "~/Software/fernflower-decompiler.jar")
      (procyon . "~/Software/procyon-decompiler-0.5.36.jar"))))
 #+end_src
-** Python
+*** JavaScript
+#+begin_src emacs-lisp
+(use-package js
+  :mode ("\\.json[5]\\'" . js-mode)
+  :commands js-mode
+  :bind
+  (:map js-mode-map
+	("C-c C-f" . json-pretty-print-buffer))
+  :custom
+  (js-indent-level am5k/tab-width))
+#+end_src
+*** Rust
+#+begin_src emacs-lisp
+(use-package rust-mode
+  :mode "\\.rs\\'")
+#+end_src
+*** Python
 #+begin_src emacs-lisp
 (use-package python
   :mode "\\.py\\'"
   :custom
-  (python-indent-offset am5k/tab-width))
+  (python-indent-offset am5k/tab-width)
+  (python-indent-guess-indent-offset nil)
+  (python-indent-guess-indent-offset-verbose nil))
 #+end_src
-** Rust
-#+begin_src emacs-lisp
-(use-package rust-mode
-  :mode "\\.rs\\'")
-#+end_src 
+*** Nix
+#+begin_src elisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src
 ** RestClient
 #+begin_src emacs-lisp
 (use-package restclient
