@@ -22,7 +22,6 @@
   # Home Manage Search Options link: https://mipmip.github.io/home-manager-option-search/
 
   home.packages = with pkgs; [
-    cargo
     cfr
     fd
     fzf
@@ -34,12 +33,15 @@
     p7zip
     plantuml
     ripgrep
-    rustc
-    rust-analyzer
-    rustfmt
     tmux
     html-tidy
     wget
+    #Rust
+    rustc
+    cargo
+    rustfmt
+    rust-analyzer
+    clippy
     #Fonts
     fira
     fira-code
