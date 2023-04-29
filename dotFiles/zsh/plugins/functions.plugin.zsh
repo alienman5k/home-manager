@@ -41,10 +41,12 @@ function nix-hm-proxy() {
   sudo launchctl kickstart -k system/org.nixos.nix-daemon
 }
 
+function oci-ssh-setup() {
+  source $FACP_SSH_HOME/aliases
+}
 
-
-export JDK_BASE=/Library/Java/JavaVirtualMachines
 function switch-java() {
+  export JDK_BASE=/Library/Java/JavaVirtualMachines
   jvms=( `\ls -1 $JDK_BASE` )
   pref='jdk-'
 
