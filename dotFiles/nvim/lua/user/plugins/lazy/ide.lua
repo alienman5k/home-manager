@@ -86,6 +86,13 @@ return {
   -- Snippets
   {
     "L3MON4D3/LuaSnip",
-    event = "BufWinEnter"
+    version = "v1.*",
+    event = "BufWinEnter",
+    config = function ()
+      require("user.plugins.setup.luasnip").setup()
+    end,
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+    }
   },
 }

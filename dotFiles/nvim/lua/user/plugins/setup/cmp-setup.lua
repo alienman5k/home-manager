@@ -6,11 +6,14 @@ end
 local M = {}
 
 M.cmp_setup = function()
+  local luasnip_loaded, luasnip = pcall(require, 'luasnip')
   cmp.setup({
     snippet = {
       -- required - you must specify a snippet engine
       expand = function(args)
-        require("luasnip").lsp_expand(args.body) -- for `luasnip` users.
+        if luasnip_loaded then
+          luasnip.lsp_expand(args.body) -- for `luasnip` users.
+        end
       end,
     },
     formatting = {
@@ -28,12 +31,12 @@ M.cmp_setup = function()
       },
     },
     mapping = cmp.mapping.preset.insert({
-      ["<c-b>"] = cmp.mapping.scroll_docs(-4),
-      ["<c-f>"] = cmp.mapping.scroll_docs(4),
-      ["<c-space>"] = cmp.mapping.complete(),
-      ["<c-e>"] = cmp.mapping.abort(),
-      ["<cr>"] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
-      ["<c-n>"] = {
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
+      ["<C-n>"] = {
         c = function(fallback)
           local _cmp = require("cmp")
           if _cmp and _cmp.visible() then
@@ -43,7 +46,7 @@ M.cmp_setup = function()
           end
         end,
       },
-      ["<c-p>"] = {
+      ["<C-p>"] = {
         c = function(fallback)
           local _cmp = require("cmp")
           if _cmp and _cmp.visible() then
@@ -52,6 +55,15 @@ M.cmp_setup = function()
             fallback()
           end
         end,
+      },
+      ["<C-l>"] = cmp.mapping {
+        i = function (fallback)
+          if luasnip_loaded and luasnip.choice_active() then
+            luasnip.change_choice(1)
+          else
+            fallback()
+          end
+        end
       },
     }),
     sources = cmp.config.sources({
