@@ -153,14 +153,15 @@ Package use-package is used to install and configure packages, straight can be i
 The configuration below is to change anything related to how Emacs UI is rendered
 ** Fonts
 #+begin_src emacs-lisp
+;; (defcons ui-font-size 160)
 (set-face-attribute 'default nil
-		    :font "Fira Code"
+		    :font "JetBrains Mono"
 		    :weight 'normal
 		    :width 'normal
-		    :height 140)
+		    :height 150)
 (set-face-attribute 'variable-pitch nil
 		    :font "Fira Sans"
-		    :height 150)
+		    :height 160)
 #+end_src
 ** Disable Tool bar and scrolls
 #+begin_src emacs-lisp
@@ -237,9 +238,9 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :custom
   (doom-modeline-buffer-file-name-style 'file-name)
   :config
-  (doom-modeline-mode 1)
-  (set-face-attribute 'mode-line nil :family "FiraCode Nerd Font" :height 130)
-  (set-face-attribute 'mode-line-inactive nil :family "FiraCode Nerd Font" :height 130))
+  (doom-modeline-mode 1))
+  ;; (set-face-attribute 'mode-line nil :family "FiraCode Nerd Font" :height 130)
+  ;; (set-face-attribute 'mode-line-inactive nil :family "FiraCode Nerd Font" :height 130))
 ;; (require 'doom-modeline)
 ;; (doom-modeline-mode 1)
 ;; (eval-after-load 'doom-modeline
@@ -247,6 +248,17 @@ The configuration below is to change anything related to how Emacs UI is rendere
 ;;      (custom-set-variables
 ;;       '(doom-modeline-buffer-file-name-style 'file-name))))
 #+end_src
+
+#+begin_src emacs-lisp
+(let ((faces '(mode-line
+               mode-line-buffer-id
+               mode-line-emphasis
+               mode-line-highlight
+               mode-line-inactive)))
+  (mapc
+   (lambda (face) (set-face-attribute face nil :family "Fira Code" :height 150))
+   faces))
+#+end_src 
 * Org-Mode
 ** Configure org-mode
 #+begin_src emacs-lisp
@@ -254,7 +266,7 @@ The configuration below is to change anything related to how Emacs UI is rendere
   :straight (:type built-in)
   ;; :mode "\\.org\\'"
   ;; :commands org-mode
-  :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
+  ;; :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   :custom
   (org-edit-src-content-indentation 0)
   (org-ellipsis " ↘")
@@ -557,7 +569,8 @@ Git in Emacs
 #+end_src
 ** Verb (REST Client minor mode for Org)
 #+begin_src elisp
-(use-package verb)
+(use-package verb
+  :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 #+end_src
 * Programming Languages & Tools
 ** Customize Major Modes
@@ -617,7 +630,7 @@ Java Decompiler
      (fernflower . "~/Software/fernflower-decompiler.jar")
      (procyon . "~/Software/procyon-decompiler-0.5.36.jar"))))
 #+end_src
-*** JavaScript
+*** COMMENT JavaScript
 #+begin_src emacs-lisp
 (use-package js
   :mode ("\\.json[5]\\'" . js-mode)
