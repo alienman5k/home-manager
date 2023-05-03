@@ -29,7 +29,6 @@
     };
 
     sessionVariables = {
-      ADE_SITE = "ade_phx";
       EDITOR = "nvim";
     };
 
@@ -82,37 +81,6 @@
         fish_style_pwd_dir_length = 1;
       };
     };
-  };
-
-  #Tmux https://github.com/tmux/tmux/wiki
-  programs.tmux = {
-    enable = true;
-    shell = "/bin/zsh";
-    baseIndex = 1;
-    # newSession = true;
-    escapeTime = 10;
-    terminal = "xterm-256color";
-    plugins = with pkgs.tmuxPlugins; [
-      gruvbox
-    ];
-    extraConfig = ''
-      # Neovim warnings
-      set-option focus-events on
-      set-option -ga terminal-overrides ",xterm-256color:Tc"
-
-      set-option -g allow-rename off
-      set-option -g renumber-windows on
-
-      # vim-like pane switching
-      bind -r k select-pane -U 
-      bind -r j select-pane -D 
-      bind -r h select-pane -L 
-      bind -r l select-pane -R 
-
-      # Switch windows
-      bind -r N swap-window -t +1 \; next-window
-      bind -r P swap-window -t -1 \; previous-window
-    '';
   };
 
 }
