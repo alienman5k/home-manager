@@ -1,7 +1,10 @@
 -- Global settings for NeoVim
+vim.opt.termguicolors = true
+ColorScheme = 'catppuccin-mocha'
 -- local g = vim.g
 -- g.loaded_netrw = 0 -- 1 means disabled
 -- g.loaded_netrwPlugin = 0 -- 1 means disabled
+
 
 -- NeoVim Options
 -- local o = vim.opt
@@ -12,6 +15,7 @@ vim.o.expandtab = true
 -- vim.o.number = true
 vim.o.relativenumber = true
 -- vim.o.hidden = true
+vim.opt.mouse = nil
 
 Jdtl_auto_start = true
 

@@ -1,6 +1,3 @@
-ColorScheme = 'gruvbox'
-vim.o.background = "dark"
-
 require('user.core.options')
 require('user.core.utils')
 require('user.core.keymap')

@@ -1,10 +1,27 @@
 return {
-  'shaunsingh/nord.nvim',
-  { 'rebelot/kanagawa.nvim', enabled = false },
-  { "catppuccin/nvim", name = "catppuccin", enabled = false },
-
+  {
+    'shaunsingh/nord.nvim',
+    enabled = false,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    enabled = true,
+    opts = {
+      transparent = true,
+      statementStyle = { bold = false },
+    },
+  },
+  {
+    'catppuccin/nvim',
+    name = "catppuccin",
+    enabled = true,
+    opts = {
+      transparent_background = true,
+    }
+  },
   {
     'ellisonleao/gruvbox.nvim',
+    enabled = true,
     opts = {
       -- contrast = 'soft',
       transparent_mode = true,
@@ -16,12 +33,12 @@ return {
     --   })
     -- end
   },
-
   {
     'navarasu/onedark.nvim',
+    enabled = true,
     opts = {
       style = 'darker',
-      transparent = true,
+      transparent = false,
     }
     -- config = function ()
     --   require('onedark').setup {
@@ -31,5 +48,13 @@ return {
     --   -- print("Loading onedark theme")
     -- end
   },
+  {
+    'ishan9299/nvim-solarized-lua',
+    enabled = true,
+  },
+  {
+    'ishan9299/modus-theme-vim',
+    enabled = true,
+  }
 
 }
