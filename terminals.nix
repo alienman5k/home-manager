@@ -11,7 +11,8 @@
   };
   # Wezterm
   programs.wezterm = {
-    enable = false;
+    enable = true;
+    package = pkgs.callPackage ./wezterm-bin.nix { };
   };
   xdg.configFile.wezterm = {
     recursive = true;
@@ -35,6 +36,13 @@
       # Neovim warnings
       set-option focus-events on
       set-option -ga terminal-overrides ',*-256color*:Tc'
+      set-option -sg escape-time 10
+      set-option -g focus-events on
+
+      # Remap Ctr+b to Ctr+Space
+      unbind-key C-b
+      set-option -g prefix C-Space
+      bind-key C-Space send-prefix
 
       set-option -g allow-rename off
       set-option -g renumber-windows on

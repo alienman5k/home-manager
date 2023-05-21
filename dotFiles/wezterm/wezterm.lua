@@ -9,7 +9,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-local maximize = function (cmd)
+local function maximize(cmd)
   -- local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
   local _, _, window = wezterm.mux.spawn_window(cmd or {})
   window:gui_window():maximize()
@@ -29,30 +29,35 @@ wezterm.on('toggle-maximize', function (window, _)
   local maxed = window['maxed']
   window:toast_notification('toggle-maximize', 'maximized: ' .. maxed, nil, 2000)
   if maxed then
-    window['maxed'] = false;
+    window['maxed'] = false
     window:restore()
   else
-    window['maxed'] = true;
+    window['maxed'] = true
     window:maximize()
   end
   -- window:toast_notification('maximize', 'Window maximize', nil, 2000)
 end)
 
 
-config.color_scheme = 'Gruvbox Dark'
+-- config.color_scheme = 'Gruvbox Dark'
+config.color_scheme = 'Solarized Dark Higher Contrast'
 -- Font Configuration
-config.font_size = 14;
+config.font_size = 14
 -- Window Opacity
-config.window_decorations = "RESIZE";
-config.window_background_opacity = 0.92;
+config.window_decorations = "RESIZE"
+config.window_background_opacity = 0.92
 config.window_padding = {
   top = "1cell",
   bottom = "1pt",
 }
 -- No tabs
-config.hide_tab_bar_if_only_one_tab = true;
--- config.enable_tab_bar = false;
-
+config.hide_tab_bar_if_only_one_tab = true
+-- config.enable_tab_bar = false
+-- Cursor config
+config.default_cursor_style = "SteadyBlock"
+config.force_reverse_video_cursor = true
+-- config.cursor_thickness = "3px"
+-- config.cursor_blinkrate = 800
 
 -- Keybindings
 config.keys = {
@@ -81,7 +86,7 @@ config.keys = {
     mods = 'SUPER|CTRL',
     action = wezterm.action.EmitEvent('toggle-maximize') -- Not working needs to be reviewed
   },
-};
+}
 
 -- and finally, return the configuration to wezterm
 return config

@@ -45,6 +45,7 @@
     #Fonts
     fira
     fira-code
+    iosevka
     jetbrains-mono
     # roboto-mono
     # ubuntu_font_family
