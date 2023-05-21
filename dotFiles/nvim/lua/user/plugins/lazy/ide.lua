@@ -58,12 +58,12 @@ return {
 
   },
   -- Java Decompiler
-  {
-    "alienman5k/jdecomp.nvim",
-    opts = {
-      decompiler = 'cfr'
-    },
-  },
+  -- {
+  --   "alienman5k/jdecomp.nvim",
+  --   opts = {
+  --     decompiler = 'cfr'
+  --   },
+  -- },
 
   -- Auto completion of words
   {

@@ -5,7 +5,10 @@ return {
     version = '2.3.0',
     cmd = "ToggleTerm",
     keys = {
-      { "<C-\\>",  "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" }
+      { "<C-\\>",  "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
+      { "<A-t>t",  "<cmd>ToggleTerm<cr>", {"n", "i"}, desc = "Toggle Terminal" },
+      { "<A-t>h",  "<cmd>ToggleTerm direction=horizontal<cr>", {"n", "i"}, desc = "Toggle Horizontal Terminal" },
+      { "<A-t>v",  "<cmd>ToggleTerm direction=vertical<cr>", {"n", "i"}, desc = "Toggle Vertial Terminal" },
     },
     opts = {
       open_mapping = [[<c-\>]],
