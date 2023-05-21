@@ -22,7 +22,7 @@
   programs.helix = {
     enable = true;
     settings = {
-      theme = "gruvbox";
+      theme = "solarized_dark";
       editor = {
         line-number = "relative";
         mouse = false;
