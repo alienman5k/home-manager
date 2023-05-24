@@ -1,12 +1,12 @@
 -- Functions that are globly available
 
 -- Prints a lua table content
-P = function(table)
+function P(table)
   print(vim.inspect(table))
 end
 
 -- Reloads a module
-R = function (module)
+function R(module)
   package.loaded[module] = nil
-  require(module)
+  return require(module)
 end
