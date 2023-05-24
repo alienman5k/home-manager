@@ -68,7 +68,7 @@ return {
   -- Auto completion of words
   {
     "hrsh7th/nvim-cmp",
-    -- event = "InsertEnter",
+    event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -87,7 +87,7 @@ return {
   {
     "L3MON4D3/LuaSnip",
     version = "v1.*",
-    event = "BufWinEnter",
+    event = "InsertEnter",
     config = function ()
       require("user.plugins.setup.luasnip").setup()
     end,
