@@ -7,7 +7,7 @@ return {
     'rebelot/kanagawa.nvim',
     enabled = true,
     opts = {
-      transparent = true,
+      transparent = false,
       statementStyle = { bold = false },
     },
   },
@@ -16,7 +16,7 @@ return {
     name = "catppuccin",
     enabled = true,
     opts = {
-      transparent_background = true,
+      transparent_background = false,
     }
   },
   {
@@ -24,7 +24,7 @@ return {
     enabled = true,
     opts = {
       -- contrast = 'soft',
-      transparent_mode = true,
+      transparent_mode = false,
     },
     -- config = function ()
     --   require("gruvbox").setup({
@@ -54,7 +54,6 @@ return {
   },
   {
     'ishan9299/modus-theme-vim',
-    enabled = true,
-  }
-
+    enabled = false,
+  },
 }
