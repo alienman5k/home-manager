@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   require("luasnip.loaders.from_lua").lazy_load({paths = "~/.local/share/snippets/luasnip/"})
-  require("luasnip.loaders.from_vscode").load({paths = { "~/.local/share/snippets/vscode/rust/", "~/.local/share/snippets/vscode/java/" }})
+  -- require("luasnip.loaders.from_vscode").load({paths = { "~/.local/share/snippets/vscode/rust/", "~/.local/share/snippets/vscode/java/" }})
   local opts = { noremap = true, silent = true }
   vim.api.nvim_set_keymap("i", "<C-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", opts)
   vim.api.nvim_set_keymap("s", "<C-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", opts)
