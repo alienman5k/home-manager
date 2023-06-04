@@ -38,9 +38,36 @@ wezterm.on('toggle-maximize', function (window, _)
   -- window:toast_notification('maximize', 'Window maximize', nil, 2000)
 end)
 
+local color_schemes = {
+  'Classic Dark (base16)',
+  'Catppuccin Mocha',
+  'Solarized Dark Higher Contrast',
+  'GruvboxDark',
+  'Tomorrow Night',
+  'terafox',
+  'Banana Blueberry',
+  'OneHalfDark',
+  'Ubuntu'
+}
+
+local current_color_index = 1
+
+wezterm.on('change-colorscheme', function (window, pane)
+  if current_color_index < #color_schemes then
+    current_color_index = current_color_index + 1
+  else
+    current_color_index = 1
+  end
+  -- config.color_scheme = color_schemes[current_color_index]
+  local overrides = window:get_config_overrides() or {}
+  overrides.color_scheme = color_schemes[current_color_index]
+  overrides.force_reverse_video_cursor = true
+  window:set_config_overrides(overrides)
+  window:toast_notification('Color Scheme changed', color_schemes[current_color_index], nil, 5000)
+end)
 
 -- config.color_scheme = 'Gruvbox Dark'
-config.color_scheme = 'Solarized Dark Higher Contrast'
+config.color_scheme = color_schemes[current_color_index]
 -- Font Configuration
 config.font_size = 14
 -- Window Opacity
@@ -86,6 +113,11 @@ config.keys = {
     mods = 'SUPER|CTRL',
     action = wezterm.action.EmitEvent('toggle-maximize') -- Not working needs to be reviewed
   },
+  {
+    key = 't',
+    mods = 'SUPER|CTRL',
+    action = wezterm.action.EmitEvent('change-colorscheme') -- Not working needs to be reviewed
+  }
 }
 
 -- and finally, return the configuration to wezterm
