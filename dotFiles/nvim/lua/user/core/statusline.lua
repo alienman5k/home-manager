@@ -134,7 +134,8 @@ StatusLine = {
       "%=",
       -- "%l|%c : %L ",
       -- "%l/%L | %c",
-      "%l,%c% :%L",
+      -- "%l,%c% :%L",
+      "ln: %l/%L  col: %c",
       "%5.5p%%",
       " %y ",
     }
@@ -169,3 +170,4 @@ vim.api.nvim_create_autocmd({'WinEnter', 'BufEnter'}, {
 
 vim.o.laststatus = 2 -- 2 Statsuline in each window. 3 Statusline only at the bottom
 -- vim.o.statusline = "%!luaeval('StatusLine.show_status()')"
+vim.o.winbar = "%=%#StatusLineNC#%f%="
