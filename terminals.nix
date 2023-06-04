@@ -29,6 +29,8 @@
     escapeTime = 10;
     # terminal = "xterm-256color";
     terminal = "screen-256color";
+    keyMode = "vi";
+    prefix = "C-Space";
     plugins = with pkgs.tmuxPlugins; [
       gruvbox
     ];
@@ -40,9 +42,9 @@
       set-option -g focus-events on
 
       # Remap Ctr+b to Ctr+Space
-      unbind-key C-b
-      set-option -g prefix C-Space
-      bind-key C-Space send-prefix
+      #unbind-key C-b
+      #set-option -g prefix C-Space
+      #bind-key C-Space send-prefix
 
       set-option -g allow-rename off
       set-option -g renumber-windows on
