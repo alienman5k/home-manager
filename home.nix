@@ -98,6 +98,20 @@
     };
   };
 
+  programs.password-store = {
+    enable = true;
+    settings = {
+      PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
+      PASSWORD_STORE_CLIP_TIME = "60";
+      PASSWORD_STORE_GENERATED_LENGTH = "24";
+    };
+  };
+
+  programs.gpg = {
+    enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
+  };
+
   imports = [
     ./shells.nix
     ./editors.nix
