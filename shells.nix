@@ -42,6 +42,7 @@
       if [[ -f "$HOME/.config/zsh/plugins/profiles.plugin.zsh" ]]; then
         source $HOME/.config/zsh/plugins/profiles.plugin.zsh
       fi
+      fpath=($HOME/.config/zsh/plugins/completions $fpath)
     '';
 
     # plugins = [
