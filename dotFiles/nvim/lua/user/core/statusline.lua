@@ -170,4 +170,4 @@ vim.api.nvim_create_autocmd({'WinEnter', 'BufEnter'}, {
 
 vim.o.laststatus = 2 -- 2 Statsuline in each window. 3 Statusline only at the bottom
 -- vim.o.statusline = "%!luaeval('StatusLine.show_status()')"
-vim.o.winbar = "%=%#StatusLineNC#%f%="
+vim.o.winbar = "%=%#StatusLineNC#%f" .. sl_clear .. "%="
