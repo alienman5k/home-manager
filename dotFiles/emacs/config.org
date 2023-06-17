@@ -232,9 +232,15 @@ The configuration below is to change anything related to how Emacs UI is rendere
 
 ;; (add-hook 'ns-system-appearance-change-functions #'am5k/apply-system-theme)
 #+end_src
+*** EF Themes
+Collection of light and dark themes https://github.com/protesilaos/ef-themes
+#+begin_src emacs-lisp
+(use-package ef-themes)
+#+end_src
 ** Modeline
 #+begin_src emacs-lisp
 (use-package doom-modeline
+  :disabled
   :custom
   (doom-modeline-buffer-file-name-style 'file-name)
   :config
