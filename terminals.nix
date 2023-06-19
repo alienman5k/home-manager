@@ -12,7 +12,7 @@
   # Wezterm
   programs.wezterm = {
     enable = true;
-    package = pkgs.callPackage ./wezterm-bin.nix { };
+    # package = pkgs.callPackage ./wezterm-bin.nix { };
   };
   xdg.configFile.wezterm = {
     recursive = true;
