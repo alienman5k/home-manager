@@ -291,20 +291,32 @@ Collection of light and dark themes https://github.com/protesilaos/ef-themes
 ;;       '(org-ellipsis " ↘"))))
 #+end_src
 * Packages Configuration
+** Tree Sitter
+#+BEGIN_SRC emacs-lisp
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+  :after tree-sitter
+  :config
+  (tree-sitter-require 'rust))
+#+END_SRC
 ** Evil
 #+begin_src emacs-lisp
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
+  ;; (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  ;; (setq evil-want-keybinding nil)
+  ;; (setq evil-want-C-u-scroll t)
   :custom
+  (evil-want-integration t)
+  (evil-want-keybinding nil)
   (evil-undo-system 'undo-redo)
+  (evil-want-C-u-scroll t)
   :config
   (evil-set-leader 'normal (kbd "SPC"))
-  (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
-  (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>ht") 'consult-theme)
+  ;; (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
+  ;; (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
+  ;; (evil-define-key 'normal 'global (kbd "<leader>ht") 'consult-theme)
   (evil-mode 1))
 #+end_src
 *** Evil Collection
@@ -578,6 +590,44 @@ Git in Emacs
 (use-package verb
   :config (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 #+end_src
+** General
+Provides a more convenient method for binding keys in emacs (for both evil and non-evil users)
+#+BEGIN_SRC emacs-lisp
+(use-package general
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "" '(nil :which-key "Leader Key")
+   "f" '(:ignore t :which-key "File")
+   "ff" 'find-file
+   "fs" 'save-buffer
+   "fn" 'evil-buffer-new
+   "fg" 'consult-find
+   "b" '(:ignore t :which-key "Buffer")
+   "bb" 'consult-buffer
+   "bn" 'evil-next-buffer
+   "bp" 'evil-prev-buffer
+   "h" '(:ignore t :which-key "Help")
+   "ht" 'consult-theme
+   "hf" 'helpful-callable
+   "hk" 'helpful-key
+   "ho" 'helpful-symbol
+   "hv" 'helpful-variable
+   "s" '(:ignore t :which-key "Search")
+   "sl" 'consult-line
+   "sg" 'consult-grep
+   "p" '(:ignore t :which-key "Project")
+   "ps" 'project-switch-project
+   "pf" 'project-find-file
+   "pd" 'project-dired
+   "t" '(:ignore t :which-key "Tabs")
+   "tt" 'tab-new
+   "tn" 'tab-next
+   "tp" 'tab-previous
+   "tc" 'tab-close
+   )
+#+END_SRC
 * Programming Languages & Tools
 ** Customize Major Modes
 *** Prog-mode
