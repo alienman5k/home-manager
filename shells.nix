@@ -26,7 +26,7 @@
       ".." = "cd ..";
       # vim = "nvim";
       vi = "nvim";
-      pass_work = "$PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store"
+      pass_work = "$PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store";
     };
 
     sessionVariables = {
