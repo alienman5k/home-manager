@@ -88,7 +88,7 @@
   };
 
   programs.gitui = {
-    enable = true;
+    enable = false;
   };
 
   programs.bat =  {
@@ -100,6 +100,13 @@
 
   programs.password-store = {
     enable = true;
+    package = pkgs.pass.withExtensions (exts: [
+      exts.pass-otp
+      exts.pass-import
+      exts.pass-audit
+      exts.pass-checkup
+      exts.pass-update
+    ]);
     settings = {
       PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
       PASSWORD_STORE_CLIP_TIME = "60";
