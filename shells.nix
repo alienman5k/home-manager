@@ -21,12 +21,12 @@
     };
     
     shellAliases = {
-      ll = "ls -ltr --color";
-      lla = "ls -altr --color";
+      ll = "ls -ltrh --color";
+      lla = "ls -altrh --color";
       ".." = "cd ..";
       # vim = "nvim";
       vi = "nvim";
-      pass_work = "$PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store";
+      pass_work = "PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store pass";
     };
 
     sessionVariables = {
