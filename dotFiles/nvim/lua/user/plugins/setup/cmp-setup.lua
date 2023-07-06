@@ -74,6 +74,14 @@ M.cmp_setup = function()
       { name = "buffer", keyword_length = 3 },
       { name = "path" },
     }),
+    window = {
+      -- completion = {
+      --   border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'},
+      -- },
+      documentation = {
+        border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'},
+      },
+    },
   })
 end
 
