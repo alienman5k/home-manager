@@ -70,13 +70,17 @@ end)
 config.color_scheme = color_schemes[current_color_index]
 -- Font Configuration
 config.font_size = 14
+config.adjust_window_size_when_changing_font_size = false
 -- Window Opacity
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.92
+config.macos_window_background_blur = 15
 config.window_padding = {
   top = "1cell",
   bottom = "1pt",
 }
+config.initial_cols = 120
+config.initial_rows = 40
 -- No tabs
 config.hide_tab_bar_if_only_one_tab = true
 -- config.enable_tab_bar = false
