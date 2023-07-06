@@ -291,10 +291,20 @@ Collection of light and dark themes https://github.com/protesilaos/ef-themes
 ;;       '(org-ellipsis " ↘"))))
 #+end_src
 * Packages Configuration
+** Fix Path MacOS
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+#+end_src
 ** Tree Sitter
 #+BEGIN_SRC emacs-lisp
-(use-package tree-sitter)
+(use-package tree-sitter
+  :straight (:type built-in))
 (use-package tree-sitter-langs
+  :straight (:type built-in)
   :after tree-sitter
   :config
   (tree-sitter-require 'rust))
@@ -312,6 +322,7 @@ Collection of light and dark themes https://github.com/protesilaos/ef-themes
   (evil-want-keybinding nil)
   (evil-undo-system 'undo-redo)
   (evil-want-C-u-scroll t)
+  (evil-want-C-i-jump nil)
   :config
   (evil-set-leader 'normal (kbd "SPC"))
   ;; (evil-define-key 'normal 'global (kbd "<leader>fs") 'save-buffer)
@@ -541,7 +552,7 @@ Substitued by corfu, a more minimalistic version which requires other packages l
 ;; (use-package vterm
 ;;   :ensure t)
 #+end_src
-** Project (Emacs version)
+** Project (Built-in)
 #+begin_src emacs-lisp
 (use-package tab-bar
   :straight (:type built-in)
@@ -549,7 +560,8 @@ Substitued by corfu, a more minimalistic version which requires other packages l
   :custom
   (tab-bar-tab-hints t)
   (tab-bar-new-tab-choice "*scratch*")
-  (tab-bar-new-tab-to "rightmost")
+  (tab-bar-new-tab-to 'rightmost)
+  (tab-bar-close-button-show nil)
   (tab-bar-select-tab-modifiers '(super)))
 #+end_src
 ** Projectile
@@ -748,6 +760,7 @@ Java Decompiler
 ** Eglot (Emacs LSP)
 #+begin_src emacs-lisp
 (use-package eglot
+  :straight (:type built-in)
   :bind (:map eglot-mode-map
               ("C-c <tab>" . completion-at-point)
               ("C-c e f n" . flymake-goto-next-error)

@@ -39,6 +39,7 @@
 
   programs.emacs = {
     enable = true;
+    package = pkgs.emacs29;
     extraConfig = ''
       (defvar am5k/emacs-config-file
         (expand-file-name "config.org" user-emacs-directory))
