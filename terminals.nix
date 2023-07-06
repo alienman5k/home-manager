@@ -12,6 +12,8 @@
   # Wezterm
   programs.wezterm = {
     enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
     # package = pkgs.callPackage ./wezterm-bin.nix { };
   };
   xdg.configFile.wezterm = {
@@ -41,12 +43,8 @@
       set-option -sg escape-time 10
       set-option -g focus-events on
 
-      # Remap Ctr+b to Ctr+Space
-      #unbind-key C-b
-      #set-option -g prefix C-Space
-      #bind-key C-Space send-prefix
-
       set-option -g allow-rename off
+      set-option -g allow-passthrough on
       set-option -g renumber-windows on
 
       # vim-like pane switching
