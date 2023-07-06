@@ -1,16 +1,16 @@
 return {
-  {
-    'shaunsingh/nord.nvim',
-    enabled = false,
-  },
-  {
-    'rebelot/kanagawa.nvim',
-    enabled = true,
-    opts = {
-      transparent = false,
-      statementStyle = { bold = false },
-    },
-  },
+  -- {
+  --   'shaunsingh/nord.nvim',
+  --   enabled = false,
+  -- },
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   enabled = true,
+  --   opts = {
+  --     transparent = false,
+  --     statementStyle = { bold = false },
+  --   },
+  -- },
   {
     'catppuccin/nvim',
     name = "catppuccin",
@@ -47,13 +47,5 @@ return {
     --   }
     --   -- print("Loading onedark theme")
     -- end
-  },
-  {
-    'ishan9299/nvim-solarized-lua',
-    enabled = true,
-  },
-  {
-    'ishan9299/modus-theme-vim',
-    enabled = false,
   },
 }
