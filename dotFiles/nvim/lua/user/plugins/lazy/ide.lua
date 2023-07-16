@@ -8,11 +8,12 @@ return {
       require("Comment").setup()
     end
   },
+  -- Plugin manager to install Language Servers, formatters, DAP and linters
   {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-    end
+    end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -20,17 +21,16 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "rust_analyzer", "jdtls" },
       })
-    end
+    end,
   },
-  -- Language Server Protocol default configurations for Neovim
+  -- Language Servers Configurations
   {
-    "neovim/nvim-lspconfig", -- Configurations for Nvim LSP
+    "neovim/nvim-lspconfig", -- Neovim collection of Language Server configurations
     config = function()
        require("user.plugins.setup.lsp-setup").lsp_setup()
     end,
     dependencies = {
-      -- "mfussenegger/nvim-dap", -- LSP Debugging
-      -- "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
+      -- Debug Adapter Protocol
       {
         "mfussenegger/nvim-dap", -- LSP Debugging
         enabled = true,
@@ -38,24 +38,23 @@ return {
         config = function()
           -- dap_setup()
           require("user.plugins.setup.lsp-setup").dap_setup()
-        end
+        end,
+        dependencies = {
+          {
+            "rcarriga/nvim-dap-ui",
+            config = function ()
+              require("dapui").setup()
+            end
+          }
+        },
       },
-      -- {
-      --   "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
-      --   enabled = true,
-      --   -- ft = "java",
-      -- },
     },
   },
   -- LspConfig with jdtls does not implement all Java LS features, JDTLS does
   {
     "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
     enabled = true,
-    ft = "java",
-    -- config = function ()
-    --   require("jdtls-setup")
-    -- end
-
+    ft = "java", -- Setup is handled when java file is open in jdtls-setup.lua
   },
   -- Java Decompiler
   -- {
