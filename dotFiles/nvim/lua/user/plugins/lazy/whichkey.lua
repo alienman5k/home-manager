@@ -13,8 +13,8 @@ return {
       })
       wc.register({
         b = { name = "Buffer" },
-        c = { name = "Code" },
-        d = { name = "Debug" },
+        -- c = { name = "Code" },
+        -- d = { name = "Debug" },
         f = { name = "File" },
         h = { name = "Help" },
         w = { name = "Window" },

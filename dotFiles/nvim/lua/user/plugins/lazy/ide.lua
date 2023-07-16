@@ -34,14 +34,13 @@ return {
       {
         "mfussenegger/nvim-dap", -- LSP Debugging
         enabled = true,
-        -- dependencies = "rcarriga/nvim-dap-ui",
         config = function()
-          -- dap_setup()
           require("user.plugins.setup.lsp-setup").dap_setup()
         end,
         dependencies = {
           {
             "rcarriga/nvim-dap-ui",
+            enabled = true,
             config = function ()
               require("dapui").setup()
             end

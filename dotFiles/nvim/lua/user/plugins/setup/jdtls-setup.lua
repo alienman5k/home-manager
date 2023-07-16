@@ -113,25 +113,11 @@ local function jdtls_setup()
         -- vim.keymap.set('n', '<leader>dc', require'dap'.continue, { buffer = bufnr, desc = 'Toggle Breakpoint' })
       end
 
-      if client.name == "jdt.ls" then
-        print("dap_setup for jdt.ls in jdtls-setup")
-        require("jdtls").setup_dap { hotcodereplace = "auto" }
-        require("jdtls.dap").setup_dap_main_class_configs()
-        vim.lsp.codelens.refresh()
-      end
-
-      -- local okduw, widgets = pcall(require, 'dap.ui.widgets')
-      -- if okduw then
-      --   vim.keymap.set({ 'n', 'v' }, '<leader>k', widgets.hover,
-      --   { buffer = bufnr, noremap = true, silent = true, desc = 'Show Expression' })
-      --   -- map('n', '<leader>wk', function() widgets.cursor_float(widgets.expression).open() end, opts)
-      --   vim.keymap.set('n', '<leader>ds', function() widgets.centered_float(widgets.scopes).open() end,
-      --   { buffer = bufnr, noremap = true, silent = true, desc = 'Show Scopes' })
-      --   -- vim.keymap.set('n', '<leader>ds', function() widgets.preview(widgets.scopes).open() end, { buffer = bufnr, noremap = true, silent = true, desc = 'Toggle Scopes' })
-      --   vim.keymap.set('n', '<leader>df', function() widgets.centered_float(widgets.frames).open() end,
-      --   { buffer = bufnr, noremap = true, silent = true, desc = 'Show Frames' })
-      --   vim.keymap.set('n', '<leader>dt', function() widgets.centered_float(widgets.threads).open() end,
-      --   { buffer = bufnr, noremap = true, silent = true, desc = 'Show Threads' })
+      -- if client.name == "jdt.ls" then
+      --   print("dap_setup for jdt.ls in jdtls-setup")
+      --   require("jdtls").setup_dap { hotcodereplace = "auto" }
+      --   require("jdtls.dap").setup_dap_main_class_configs()
+      --   vim.lsp.codelens.refresh()
       -- end
     end
   }

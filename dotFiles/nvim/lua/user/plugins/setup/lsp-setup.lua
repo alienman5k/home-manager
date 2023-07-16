@@ -5,6 +5,24 @@ end
 
 local M = {}
 
+-- Keymap for DAP UI
+local function dap_ui_widgets_setup(bufnr)
+  local widgets_loaded, widgets = pcall(require, 'dap.ui.widgets')
+  if widgets_loaded then
+    vim.keymap.set({ 'n', 'v' }, '<leader>k', widgets.hover,
+      { buffer = bufnr, noremap = true, silent = true, desc = 'Show Expression' })
+    -- map('n', '<leader>wk', function() widgets.cursor_float(widgets.expression).open() end, opts)
+    vim.keymap.set('n', '<leader>ds', function() widgets.centered_float(widgets.scopes).open() end,
+      { buffer = bufnr, noremap = true, silent = true, desc = 'Show Scopes' })
+    -- vim.keymap.set('n', '<leader>ds', function() widgets.preview(widgets.scopes).open() end, { buffer = bufnr, noremap = true, silent = true, desc = 'Toggle Scopes' })
+    vim.keymap.set('n', '<leader>df', function() widgets.centered_float(widgets.frames).open() end,
+      { buffer = bufnr, noremap = true, silent = true, desc = 'Show Frames' })
+    vim.keymap.set('n', '<leader>dt', function() widgets.centered_float(widgets.threads).open() end,
+      { buffer = bufnr, noremap = true, silent = true, desc = 'Show Threads' })
+  end
+end
+
+
 -- Callback function to use when an Language Server is attached to provide generic mappings for all clients
 local function on_lsp_attach(ev)
   local function get_opts (desc)
@@ -32,13 +50,23 @@ local function on_lsp_attach(ev)
   vim.keymap.set("n", "<leader>fr", '<cmd>Telescope lsp_references<cr>', get_opts('References'))
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, get_opts('Signature help'))
 
-  local client_name = vim.lsp.get_client_by_id(ev.data.client_id)
-  if client_name == "jdt.ls" then
-    print("dap_setup for jdt.ls in lsp_setup")
+  local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  -- print("Client name: " .. client.name)
+  if client.name == "jdtls" then
+    print("dap_setup for jdt.ls in lsp_setup during on_lsp_attach")
     require("jdtls").setup_dap { hotcodereplace = "auto" }
     require("jdtls.dap").setup_dap_main_class_configs()
     vim.lsp.codelens.refresh()
   end
+  local okwk, wc = pcall(require, 'which-key')
+  if okwk then
+    wc.register({
+      ["<leader>c"] = { name = "+Code" },
+      ["<leader>d"] = { name = "+Debugger" }
+    })
+  end
+
+  dap_ui_widgets_setup(ev.buf)
 end
 
 function M.lsp_setup()
@@ -94,40 +122,24 @@ end
 
 
 function M.dap_setup()
-  local dap, dapui = require("dap"), require("dapui")
-  dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
+  local dapui_loaded, dapui = pcall(require, 'dapui')
+  if dapui_loaded then
+    local dap_loaded, dap = pcall(require, 'dap')
+    if dap_loaded then
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        -- vim.opt.mouse = "a"
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        -- vim.opt.mouse = nil
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        -- vim.opt.mouse = nil
+        dapui.close()
+      end
+    end
   end
-  dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
-  end
-  dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
-  end
-
-  -- local okduw, widgets = pcall(require, 'dap.ui.widgets')
-  -- if not okduw then
-  --   print('dap.ui.widgets not loaded')
-  --   return
-  -- end
-
-  -- local opts = { buffer = 0, noremap = true, silent = true }
-  -- Mappings
-  -- local widgets = require('dap.ui.widgets')
-  local okwk, wc = pcall(require, 'which-key')
-  if okwk then
-    wc.register({
-      ["<leader>d"] = { name = "+Debugger" }
-    })
-  end
-
-  -- local map = vim.keymap.set
-  -- map('n', '<leader>dk', widgets.hover, { desc = 'Show Expression' })
-  -- -- map('n', '<leader>wk', function() widgets.cursor_float(widgets.expression).open() end, opts)
-  -- map('n', '<leader>ds', function() widgets.centered_float(widgets.scopes).open() end,
-  --   { buffer = 0, noremap = true, silent = true, desc = 'Show Scopes' })
-  -- map('n', '<leader>df', function() widgets.centered_float(widgets.frames).open() end, { desc = 'Show Frames' })
-  -- map('n', '<leader>dt', function() widgets.centered_float(widgets.threads).open() end, opts, { desc = 'Show Threads' })
 end
 
 return M
