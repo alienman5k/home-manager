@@ -8,21 +8,6 @@ return {
       require("Comment").setup()
     end
   },
-  -- Plugin manager to install Language Servers, formatters, DAP and linters
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    config = function ()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "jdtls" },
-      })
-    end,
-  },
   -- Language Servers Configurations
   {
     "neovim/nvim-lspconfig", -- Neovim collection of Language Server configurations
@@ -30,6 +15,21 @@ return {
        require("user.plugins.setup.lsp-setup").lsp_setup()
     end,
     dependencies = {
+      -- Plugin manager to install Language Servers, formatters, DAP and linters
+      {
+        "williamboman/mason.nvim",
+        config = function()
+          require("mason").setup()
+        end,
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        config = function ()
+          require("mason-lspconfig").setup({
+            ensure_installed = { "lua_ls", "rust_analyzer", "jdtls" },
+          })
+        end,
+      },
       -- Debug Adapter Protocol
       {
         "mfussenegger/nvim-dap", -- LSP Debugging
@@ -75,22 +75,22 @@ return {
       "hrsh7th/cmp-nvim-lua",
       --"hrsh7th/cmp-cmdline",
       "onsails/lspkind.nvim",
+      -- Snippets
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v1.*",
+        event = "InsertEnter",
+        config = function ()
+          require("user.plugins.setup.luasnip").setup()
+        end,
+        dependencies = {
+          "saadparwaiz1/cmp_luasnip",
+        }
+      },
     },
     config = function()
       require("user.plugins.setup.cmp-setup").cmp_setup()
     end
   },
   -- End Completion
-  -- Snippets
-  {
-    "L3MON4D3/LuaSnip",
-    version = "v1.*",
-    event = "InsertEnter",
-    config = function ()
-      require("user.plugins.setup.luasnip").setup()
-    end,
-    dependencies = {
-      "saadparwaiz1/cmp_luasnip",
-    }
-  },
 }

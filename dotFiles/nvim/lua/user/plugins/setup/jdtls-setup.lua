@@ -99,19 +99,19 @@ local function jdtls_setup()
       jdtls.setup_dap({ hotcodereplace = 'auto' })
       require('jdtls.setup').add_commands()
 
-      local dap_loaded, dap = pcall(require, 'dap')
-      if dap_loaded then
-        vim.keymap.set('n', '<leader>db', require 'dap'.toggle_breakpoint, { buffer = bufnr, desc = 'Toggle Breakpoint' })
-        vim.keymap.set('n', '<leader>dc', require 'dap'.continue, { buffer = bufnr, desc = 'Continue Debugger' })
-        vim.keymap.set('n', '<leader>di', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
-        vim.keymap.set('n', '<leader>do', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
-        vim.keymap.set('n', '<F7>', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
-        vim.keymap.set('n', '<S-F7>', dap.step_back, { buffer = bufnr, desc = 'Step Back' })
-        vim.keymap.set('n', '<F8>', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
-        vim.keymap.set('n', '<S-F8>', dap.step_out, { buffer = bufnr, desc = 'Step out' })
-        vim.keymap.set('n', '<F9>', dap.continue, { buffer = bufnr, desc = 'Continue' })
-        -- vim.keymap.set('n', '<leader>dc', require'dap'.continue, { buffer = bufnr, desc = 'Toggle Breakpoint' })
-      end
+      -- local dap_loaded, dap = pcall(require, 'dap')
+      -- if dap_loaded then
+      --   vim.keymap.set('n', '<leader>db', require 'dap'.toggle_breakpoint, { buffer = bufnr, desc = 'Toggle Breakpoint' })
+      --   vim.keymap.set('n', '<leader>dc', require 'dap'.continue, { buffer = bufnr, desc = 'Continue Debugger' })
+      --   vim.keymap.set('n', '<leader>di', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
+      --   vim.keymap.set('n', '<leader>do', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
+      --   vim.keymap.set('n', '<F7>', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
+      --   vim.keymap.set('n', '<S-F7>', dap.step_back, { buffer = bufnr, desc = 'Step Back' })
+      --   vim.keymap.set('n', '<F8>', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
+      --   vim.keymap.set('n', '<S-F8>', dap.step_out, { buffer = bufnr, desc = 'Step out' })
+      --   vim.keymap.set('n', '<F9>', dap.continue, { buffer = bufnr, desc = 'Continue' })
+      --   -- vim.keymap.set('n', '<leader>dc', require'dap'.continue, { buffer = bufnr, desc = 'Toggle Breakpoint' })
+      -- end
 
       -- if client.name == "jdt.ls" then
       --   print("dap_setup for jdt.ls in jdtls-setup")

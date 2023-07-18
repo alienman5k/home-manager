@@ -12,24 +12,22 @@ local function dap_ui_widgets_setup(bufnr)
     vim.keymap.set({ 'n', 'v' }, '<leader>k', widgets.hover,
       { buffer = bufnr, noremap = true, silent = true, desc = 'Show Expression' })
     -- map('n', '<leader>wk', function() widgets.cursor_float(widgets.expression).open() end, opts)
-    vim.keymap.set('n', '<leader>ds', function() widgets.centered_float(widgets.scopes).open() end,
+    vim.keymap.set('n', '<leader>dss', function() widgets.centered_float(widgets.scopes).open() end,
       { buffer = bufnr, noremap = true, silent = true, desc = 'Show Scopes' })
     -- vim.keymap.set('n', '<leader>ds', function() widgets.preview(widgets.scopes).open() end, { buffer = bufnr, noremap = true, silent = true, desc = 'Toggle Scopes' })
-    vim.keymap.set('n', '<leader>df', function() widgets.centered_float(widgets.frames).open() end,
+    vim.keymap.set('n', '<leader>dsf', function() widgets.centered_float(widgets.frames).open() end,
       { buffer = bufnr, noremap = true, silent = true, desc = 'Show Frames' })
-    vim.keymap.set('n', '<leader>dt', function() widgets.centered_float(widgets.threads).open() end,
+    vim.keymap.set('n', '<leader>dst', function() widgets.centered_float(widgets.threads).open() end,
       { buffer = bufnr, noremap = true, silent = true, desc = 'Show Threads' })
   end
 end
 
-
--- Callback function to use when an Language Server is attached to provide generic mappings for all clients
-local function on_lsp_attach(ev)
+local function add_keymaps(bufnr)
   local function get_opts (desc)
-    return { noremap = true, silent = true, desc = desc, buffer = ev.buf }
+    return { noremap = true, silent = true, desc = desc, buffer = bufnr }
   end
   -- Enable completion triggered by <c-x><c-o>
-  vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
   -- This options apply to any buffer after LSP plugin has loaded, in order to add other keymaps for a particular server, use the on_attach property.
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, get_opts())
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, get_opts('Go to definition'))
@@ -50,14 +48,39 @@ local function on_lsp_attach(ev)
   vim.keymap.set("n", "<leader>fr", '<cmd>Telescope lsp_references<cr>', get_opts('References'))
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, get_opts('Signature help'))
 
+  -- Add DAP Mappings
+  local dap_loaded, dap = pcall(require, 'dap')
+  if dap_loaded then
+    vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { buffer = bufnr, desc = 'Toggle Breakpoint' })
+    vim.keymap.set('n', '<leader>dc', dap.continue, { buffer = bufnr, desc = 'Continue Debugger' })
+    vim.keymap.set('n', '<leader>di', dap.step_into, { buffer = bufnr, desc = 'Step Into' })
+    vim.keymap.set('n', '<leader>do', dap.step_over, { buffer = bufnr, desc = 'Step Over' })
+    vim.keymap.set('n', '<F8>', dap.continue, { buffer = bufnr, desc = 'Start/Continue Debugger' })
+    vim.keymap.set('n', '<F7>', dap.step_into, { buffer = bufnr, desc = 'Step Into' })
+    vim.keymap.set('n', '<S-F7>', dap.step_back, { buffer = bufnr, desc = 'Step Back' })
+    vim.keymap.set('n', '<F9>', dap.step_over, { buffer = bufnr, desc = 'Step Over' })
+    vim.keymap.set('n', '<S-F9>', dap.step_out, { buffer = bufnr, desc = 'Step out' })
+    -- vim.keymap.set('n', '<leader>dc', require'dap'.continue, { buffer = bufnr, desc = 'Toggle Breakpoint' })
+    vim.keymap.set('n', '<leader>dC', function()
+      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+    end, { desc = 'Debug: Set Breakpoint' })
+  end
+
+end
+
+-- Callback function to use when an Language Server is attached to provide generic mappings for all clients
+local function on_lsp_attach(ev)
+  add_keymaps(ev.buf)
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
   -- print("Client name: " .. client.name)
   if client.name == "jdtls" then
-    print("dap_setup for jdt.ls in lsp_setup during on_lsp_attach")
+    -- print("dap_setup for jdt.ls in lsp_setup during on_lsp_attach")
     require("jdtls").setup_dap { hotcodereplace = "auto" }
     require("jdtls.dap").setup_dap_main_class_configs()
     vim.lsp.codelens.refresh()
   end
+
+  -- Add WhichKey integration
   local okwk, wc = pcall(require, 'which-key')
   if okwk then
     wc.register({
@@ -138,8 +161,48 @@ function M.dap_setup()
         -- vim.opt.mouse = nil
         dapui.close()
       end
+       vim.keymap.set('n', '<leader>dt', dapui.toggle, { desc = 'Debug: See last session result.' })
     end
   end
+  -- local dap = require("dap")
+  -- -- Adapters
+  -- dap.adapters.lldb = {
+  --   type = "executable",
+  --   -- command = "/Users/imarmole/.local/share/nvim/mason/packages/codelldb/codelldb", -- adjust as needed
+  --   command = "lldb", -- adjust as needed
+  --   name = "lldb",
+  -- }
+  -- -- Configurations
+  -- -- lldb/rust
+  -- dap.configurations.rust = {
+  --   {
+  --     name = "Launch lldb",
+		-- 	type = "lldb",
+		-- 	request = "launch",
+		-- 	program = function()
+		-- 		return vim.fn.input(
+		-- 			"Path to executable: ",
+		-- 			vim.fn.getcwd() .. "/",
+		-- 			"file"
+		-- 		)
+		-- 	end,
+		-- 	cwd = "${workspaceFolder}",
+		-- 	stopOnEntry = false,
+		-- 	args = {},
+  --
+		-- 	-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+		-- 	--
+		-- 	--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+		-- 	--
+		-- 	-- Otherwise you might get the following error:
+		-- 	--
+		-- 	--    Error on launch: Failed to attach to the target process
+		-- 	--
+		-- 	-- But you should be aware of the implications:
+		-- 	-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+		-- 	runInTerminal = false,
+  --   }
+  -- }
 end
 
 return M
