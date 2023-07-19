@@ -98,6 +98,8 @@ function M.lsp_setup()
     callback = on_lsp_attach
   })
 
+  local m_capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
   -- Configuration applies only to Lua LSP
   lspconfig.lua_ls.setup {
     settings = {
@@ -120,13 +122,13 @@ function M.lsp_setup()
           enable = false,
         },
       },
-      capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+      capabilities = m_capabilities,
     },
   }
 
   -- Configuration for RUST
   lspconfig.rust_analyzer.setup{
-    capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = m_capabilities,
     settings = {
       ['rust-analyzer'] = {
         diagnostics = {
