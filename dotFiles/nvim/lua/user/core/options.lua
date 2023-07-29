@@ -16,7 +16,7 @@ vim.o.expandtab = true
 vim.o.relativenumber = true
 -- vim.o.hidden = true
 vim.o.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:+'
--- vim.opt.mouse = nil
+vim.opt.mouse = nil
 
 Jdtl_auto_start = true
 

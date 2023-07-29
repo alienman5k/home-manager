@@ -7,7 +7,7 @@ local map = vim.keymap.set
 --vim.keymap.del({'n', 'v'}, '<Space>', {})
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 -- map('n', '<leader>ev', '<C-w><C-v><C-l>:e $MYVIMRC<cr><Paste>', { desc="Open configuration file in split window" })
 map('n', '<leader>q', ':q<cr>', { desc = 'Quit' })
@@ -19,17 +19,15 @@ map('n', '<leader>hr', ':source $MYVIMRC<cr>', { desc='Reload configuration file
 map('t', '<Esc>', '<C-\\><C-n>', {})
 
 -- Window mapping
-map('n', '<leader>ww', '<C-w>w', {})
--- map('n', '<leader>ws', '<cmd>:new<cr>', {})
-map('n', '<leader>ws', '<C-w><C-s>', {})
--- map('n', '<leader>wv', '<c-w>:vnew<cr>', {})
-map('n', '<leader>wv', '<C-w><C-v>', {})
-map('n', '<leader>wr', '<C-w>r', {})
-map('n', '<leader>wh', '<C-w>h', {})
-map('n', '<leader>wj', '<C-w>j', {})
-map('n', '<leader>wk', '<C-w>k', {})
-map('n', '<leader>wl', '<C-w>l', {})
-map('n', '<leader>wo', '<C-w>o', {}) -- Close other windows except this, alternative :only
+-- map('n', '<leader>ww', '<C-w>w', {})
+-- -- map('n', '<leader>ws', '<cmd>:new<cr>', {})
+-- map('n', '<leader>ws', '<C-w>s', {})
+-- map('n', '<leader>wr', '<C-w>r', {})
+-- map('n', '<leader>wh', '<C-w>h', {})
+-- map('n', '<leader>wj', '<C-w>j', {})
+-- map('n', '<leader>wk', '<C-w>k', {})
+-- map('n', '<leader>wl', '<C-w>l', {})
+-- map('n', '<leader>wo', '<C-w>o', {}) -- Close other windows except this, alternative :only
 
 -- Tabs
 map('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })

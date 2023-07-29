@@ -405,7 +405,7 @@ Provides Elisp forwards compatibility library.
   (save-place-mode 1)
   (recentf-mode 1))
 #+end_src
-*** Vertico Directory
+*** Vertico Extensions
 Vertico extension to apply on top of directory for more covenient navigation commands.
 This come already as part of vertico package, but it is not loaded, so we need to manually load the extensions ourself
 #+begin_src emacs-lisp
@@ -430,6 +430,7 @@ This come already as part of vertico package, but it is not loaded, so we need t
 ;;      (define-key vertico-map "\M-\d" #'vertico-directory-delete-word)
      ;; (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)))
 (use-package vertico-posframe
+  :disabled
   ;; :straight nil
   ;; :load-path "straight/build/vertico/extensions/"
   :after vertico

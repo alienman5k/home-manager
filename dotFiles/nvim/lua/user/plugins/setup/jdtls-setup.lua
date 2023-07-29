@@ -82,7 +82,7 @@ local function jdtls_setup()
       bundles = bundles
     },
     capabilities = cmp_capabilities,
-    on_attach = function(client, bufnr)
+    on_attach = function(_, bufnr)
       local jdtls = require('jdtls')
       vim.keymap.set('n', '<leader>co', jdtls.organize_imports, { buffer = bufnr, desc = 'Organize Imports' })
       vim.keymap.set('n', '<leader>cu', jdtls.update_project_config, { buffer = bufnr })

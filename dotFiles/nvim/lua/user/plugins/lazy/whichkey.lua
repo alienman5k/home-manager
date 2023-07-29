@@ -17,10 +17,15 @@ return {
         -- d = { name = "Debug" },
         f = { name = "File" },
         h = { name = "Help" },
-        w = { name = "Window" },
+        -- w = { name = "Window" },
         ['<Tab>'] = { name = 'Tabs'}
         -- z = { name = "Fold" },
       }, { prefix = "<leader>" })
+      -- Below is register on LSP Attach to make it local to the buffer
+      -- wc.register({
+      --   c = { name = "Code" },
+      --   d = { name = "Debug" },
+      -- }, { prefix = "<localleader>" })
     end,
   },
 }

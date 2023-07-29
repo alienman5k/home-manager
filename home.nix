@@ -30,6 +30,7 @@
     jq
     maven
     nodejs
+    nodePackages.typescript
     p7zip
     plantuml
     ripgrep
@@ -49,9 +50,9 @@
     jetbrains-mono
     # roboto-mono
     # ubuntu_font_family
-    # (nerdfonts.override {
-    #   fonts = [ "SauceCodePro" ];
-    # })
+    (nerdfonts.override {
+      fonts = [ "FiraCode" "JetBrainsMono" "UbuntuMono" ];
+    })
 
     #End Fonts
   ];

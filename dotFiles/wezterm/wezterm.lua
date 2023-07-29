@@ -1,7 +1,28 @@
-local wezterm = require 'wezterm'
+-- See https://wezfurlong.org/wezterm/
 
--- This table will hold the configuration.
+-- Add config folder to watchlist for config reloads.
+local wezterm = require 'wezterm';
+wezterm.add_to_config_reload_watch_list(wezterm.config_dir)
+
 local config = {}
+local defaults = {
+  maximized = false,
+  opacity = 0.92,
+  blur = 15,
+  color_schemes = {
+    'Catppuccin Mocha',
+    'Japanesque',
+    'Classic Dark (base16)',
+    'Solarized Dark Higher Contrast',
+    'GruvboxDark',
+    'Tomorrow Night',
+    'terafox',
+    'Banana Blueberry',
+    'OneHalfDark',
+    'Ubuntu'
+  },
+  current_color_index = 1
+}
 
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
@@ -9,65 +30,72 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-local function maximize(cmd)
+local function window_maximize(cmd)
   -- local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
   local _, _, window = wezterm.mux.spawn_window(cmd or {})
   window:gui_window():maximize()
+  defaults.maximized = true
 end
 
-wezterm.on('gui-startup', maximize)
-wezterm.on('window-maximize', function (window, _)
-  window:maximize()
-  -- window:toast_notification('maximize', 'Window maximize', nil, 2000)
-end)
-wezterm.on('window-restore', function (window, _)
-  window:restore()
-  -- window:toast_notification('restore', 'Window restored', nil, 2000)
-end)
--- Toggling seems more complicated, where can we save state?
+wezterm.on('gui-startup', window_maximize)
 wezterm.on('toggle-maximize', function (window, _)
-  local maxed = window['maxed']
-  window:toast_notification('toggle-maximize', 'maximized: ' .. maxed, nil, 2000)
-  if maxed then
-    window['maxed'] = false
-    window:restore()
-  else
-    window['maxed'] = true
+  wezterm.log_info("Maximized", defaults.maximized)
+  if not defaults.maximized then
     window:maximize()
+    defaults.maximized = true
+  else
+    window:restore()
+    defaults.maximized = false
   end
   -- window:toast_notification('maximize', 'Window maximize', nil, 2000)
 end)
 
-local color_schemes = {
-  'Classic Dark (base16)',
-  'Catppuccin Mocha',
-  'Solarized Dark Higher Contrast',
-  'GruvboxDark',
-  'Tomorrow Night',
-  'terafox',
-  'Banana Blueberry',
-  'OneHalfDark',
-  'Ubuntu'
-}
-
-local current_color_index = 1
-
-wezterm.on('change-colorscheme', function (window, pane)
-  if current_color_index < #color_schemes then
-    current_color_index = current_color_index + 1
+local function toggle_opacity(window)
+  local overrides = window:get_config_overrides() or {}
+  -- window:toast_notification('toggle-transparency', overrides.window_background_opacity, nil, 2000)
+  wezterm.log_info(overrides)
+  if defaults.opacity == 1.0 then
+    defaults.opacity = 0.92
+    defaults.blur = 15
   else
-    current_color_index = 1
+    defaults.opacity = 1.0
+    defaults.blur = 0
+  end
+  overrides.window_background_opacity = defaults.opacity
+  overrides.macos_window_background_blur = defaults.blur
+  window:set_config_overrides(overrides)
+end
+
+wezterm.on('toggle-opacity', toggle_opacity)
+
+
+wezterm.on('change-colorscheme', function (window, _)
+  if defaults.current_color_index < #defaults.color_schemes then
+    defaults.current_color_index = defaults.current_color_index + 1
+  else
+    defaults.current_color_index = 1
   end
   -- config.color_scheme = color_schemes[current_color_index]
   local overrides = window:get_config_overrides() or {}
-  overrides.color_scheme = color_schemes[current_color_index]
+  overrides.color_scheme = defaults.color_schemes[defaults.current_color_index]
   overrides.force_reverse_video_cursor = true
+  wezterm.log_info(overrides)
   window:set_config_overrides(overrides)
-  window:toast_notification('Color Scheme changed', color_schemes[current_color_index], nil, 5000)
+  window:toast_notification('Color Scheme changed', defaults.color_schemes[defaults.current_color_index], nil, 5000)
 end)
 
+-- wezterm.on('window-focus-changed', function(window, _)
+--   wezterm.log_info(
+--     'the focus state of ',
+--     window:window_id(),
+--     ' changed to ',
+--     window:is_focused()
+--   )
+--   toggle_opacity(window)
+-- end)
+
 -- config.color_scheme = 'Gruvbox Dark'
-config.color_scheme = color_schemes[current_color_index]
+config.color_scheme = defaults.color_schemes[defaults.current_color_index]
 -- Font Configuration
 config.font_size = 14
 config.adjust_window_size_when_changing_font_size = false
@@ -83,12 +111,20 @@ config.initial_cols = 120
 config.initial_rows = 40
 -- No tabs
 config.hide_tab_bar_if_only_one_tab = true
+config.use_fancy_tab_bar = true
 -- config.enable_tab_bar = false
 -- Cursor config
 config.default_cursor_style = "SteadyBlock"
 config.force_reverse_video_cursor = true
 -- config.cursor_thickness = "3px"
 -- config.cursor_blinkrate = 800
+
+config.window_frame = {
+  font = wezterm.font { family = 'Fira Mono', weight = 'Bold' },
+  font_size = 12,
+  -- active_titlebar_bg = '#333333',
+  -- inactive_titlebar_bg = '#FFFFFF',
+}
 
 -- Keybindings
 config.keys = {
@@ -105,24 +141,21 @@ config.keys = {
   {
     key = "Enter",
     mods = 'SUPER',
-    action = wezterm.action.EmitEvent('window-maximize')
-  },
-  {
-    key = "Enter",
-    mods = 'SUPER|SHIFT',
-    action = wezterm.action.EmitEvent('window-restore')
-  },
-  {
-    key = "Enter",
-    mods = 'SUPER|CTRL',
-    action = wezterm.action.EmitEvent('toggle-maximize') -- Not working needs to be reviewed
+    action = wezterm.action.EmitEvent('toggle-maximize')
   },
   {
     key = 't',
     mods = 'SUPER|CTRL',
-    action = wezterm.action.EmitEvent('change-colorscheme') -- Not working needs to be reviewed
+    action = wezterm.action.EmitEvent('change-colorscheme')
+  },
+  {
+    key = 'o',
+    mods = 'SUPER|CTRL',
+    action = wezterm.action.EmitEvent('toggle-opacity')
   }
 }
+
+-- config.debug_key_events = true
 
 -- and finally, return the configuration to wezterm
 return config
