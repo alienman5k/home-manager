@@ -12,7 +12,7 @@ return
       additional_vim_regex_highlighting = false,
     },
     indent = {
-      enable = true ,
+      enable = true,
     },
     context_commentstring = {
       enable = true,
@@ -27,6 +27,7 @@ return
       -- "ledger",
       "lua",
       -- "python",
+      "nix",
       "rust",
     },
   },
