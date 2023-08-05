@@ -17,6 +17,12 @@ return {
       vim.keymap.set('n', '<localleader>gb', require('gitsigns').stage_buffer, { buffer = bufnr, desc = 'Stage [b]uffer' })
       vim.keymap.set('n', '<localleader>gs', require('gitsigns').stage_hunk, { buffer = bufnr, desc = '[S]tage hunk' })
       vim.keymap.set('n', '<localleader>gu', require('gitsigns').undo_stage_hunk, { buffer = bufnr, desc = '[U]ndo stage hunk' })
+      local wc_loaded, wc = pcall(require, 'which-key')
+      if wc_loaded then
+        wc.register({
+          ["<localleader>g"] = { name = "+Git" },
+        }, {buffer = bufnr})
+      end
     end,
   },
 }
