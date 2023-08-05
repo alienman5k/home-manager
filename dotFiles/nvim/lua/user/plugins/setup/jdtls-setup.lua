@@ -20,6 +20,8 @@ local function add_jdtls_keymaps(bufnr)
   vim.keymap.set('n', '<localleader>tc', jdtls.test_class, { buffer = bufnr, desc = 'Test [c]lass' })
   vim.keymap.set('n', '<localleader>tt', jdtls.test_nearest_method, { buffer = bufnr, desc = '[T]est nearest method' })
   vim.keymap.set('n', '<localleader>tp', jdtls.pick_test, { buffer = bufnr, desc = '[P]ick test to run' })
+  vim.keymap.set('n', '<localleader>tg', require('jdtls.tests').generate, { buffer = bufnr, desc = '[G]enerate tests' })
+  vim.keymap.set('n', '<localleader>ts', require('jdtls.tests').goto_subjects, { buffer = bufnr, desc = 'Go to [s]ubjects' })
   local wc_loaded, wc = pcall(require, 'which-key')
   if wc_loaded then
     wc.register({
