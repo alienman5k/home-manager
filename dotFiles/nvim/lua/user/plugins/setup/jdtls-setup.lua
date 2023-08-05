@@ -10,12 +10,34 @@ local function lspconfig_setup()
   end
 end
 
+local function add_jdtls_keymaps(bufnr)
+  local jdtls = require('jdtls')
+  vim.keymap.set('n', '<localleader>co', jdtls.organize_imports, { buffer = bufnr, desc = '[O]rganize Imports' })
+  vim.keymap.set('n', '<localleader>cu', jdtls.update_project_config, { buffer = bufnr })
+  vim.keymap.set('n', '<localleader>cc', function() jdtls.compile('incremental') end, { buffer = bufnr, desc = '[C]ompile Incremental' })
+  vim.keymap.set('n', '<localleader>cc', function() jdtls.compile('full') end, { buffer = bufnr, desc = 'Compile [F]ull' })
+  vim.keymap.set('n', '<localleader>cb', jdtls.build_projects, { buffer = bufnr, desc = '[B]uild' })
+  vim.keymap.set('n', '<localleader>tc', jdtls.test_class, { buffer = bufnr, desc = 'Test [c]lass' })
+  vim.keymap.set('n', '<localleader>tt', jdtls.test_nearest_method, { buffer = bufnr, desc = '[T]est nearest method' })
+  vim.keymap.set('n', '<localleader>tp', jdtls.pick_test, { buffer = bufnr, desc = '[P]ick test to run' })
+  local wc_loaded, wc = pcall(require, 'which-key')
+  if wc_loaded then
+    wc.register({
+      ["<localleader>c"] = { name = "+Code" },
+      ["<localleader>t"] = { name = "+Test" }
+    }, {buffer = bufnr})
+  end
+end
+
 local function jdtls_setup()
   -- print("Start jdtls_setup")
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
   local home = os.getenv('HOME')
-  local jdtls_install_dir = home .. '/.local/share/nvim/mason/share/jdtls/'
-  local jdtls_config_dir = home .. '/.local/share/nvim/mason/share/jdtls/config/'
+  -- print('home: ', home)
+  local mason_home = home .. '/.local/share/nvim/mason'
+  -- print('mason home: ', mason_home)
+  local jdtls_install_dir = mason_home .. '/share/jdtls/'
+  local jdtls_config_dir = mason_home .. '/share/jdtls/config/'
   local workspace_dir = home .. '/.cache/jdtls/workspace/' .. project_name
 
   -- Define the capabilities for the LSP Client
@@ -26,9 +48,11 @@ local function jdtls_setup()
   end
   -- Define the bundles for JSTL
   local bundles = {
-    vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar")
+    --  java-debug bundle
+    vim.fn.glob(mason_home .. '/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1)
   }
-  vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/packages/java-test/extension/server/*.jar"), "\n"))
+  -- vscode-java-test bundle
+  vim.list_extend(bundles, vim.split(vim.fn.glob(mason_home .. '/packages/java-test/extension/server/*.jar', 1), '\n'))
 
   local java_jdk_dir = "/Library/Java/JavaVirtualMachines/"
   -- Configuration to pass to the LSP Client when a Java file is open
@@ -83,42 +107,9 @@ local function jdtls_setup()
     },
     capabilities = cmp_capabilities,
     on_attach = function(_, bufnr)
-      local jdtls = require('jdtls')
-      vim.keymap.set('n', '<leader>co', jdtls.organize_imports, { buffer = bufnr, desc = 'Organize Imports' })
-      vim.keymap.set('n', '<leader>cu', jdtls.update_project_config, { buffer = bufnr })
-      vim.keymap.set('n', '<leader>cc', function() jdtls.compile('full') end, { buffer = bufnr, desc = 'Compile' })
-      vim.keymap.set('n', '<leader>cb', jdtls.build_projects, { buffer = bufnr, desc = 'Build' })
-      local okwc, wc = pcall(require, 'which-key')
-      if okwc then
-        wc.register({ '<leader>ct', name = 'Test' })
-      end
-      vim.keymap.set('n', '<leader>ctc', jdtls.test_class, { buffer = bufnr, desc = 'Test class' })
-      vim.keymap.set('n', '<leader>ctt', jdtls.test_nearest_method, { buffer = bufnr, desc = 'Test nearest method' })
-      -- vim.keymap.set('n', '<leader>tm', jdtls.test_nearest_method, { buffer = bufnr, desc = 'Test nearest method' })
-
-      jdtls.setup_dap({ hotcodereplace = 'auto' })
+      add_jdtls_keymaps(bufnr)
+      require('jdtls').setup_dap({ hotcodereplace = 'auto' })
       require('jdtls.setup').add_commands()
-
-      -- local dap_loaded, dap = pcall(require, 'dap')
-      -- if dap_loaded then
-      --   vim.keymap.set('n', '<leader>db', require 'dap'.toggle_breakpoint, { buffer = bufnr, desc = 'Toggle Breakpoint' })
-      --   vim.keymap.set('n', '<leader>dc', require 'dap'.continue, { buffer = bufnr, desc = 'Continue Debugger' })
-      --   vim.keymap.set('n', '<leader>di', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
-      --   vim.keymap.set('n', '<leader>do', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
-      --   vim.keymap.set('n', '<F7>', require 'dap'.step_into, { buffer = bufnr, desc = 'Step Into' })
-      --   vim.keymap.set('n', '<S-F7>', dap.step_back, { buffer = bufnr, desc = 'Step Back' })
-      --   vim.keymap.set('n', '<F8>', require 'dap'.step_over, { buffer = bufnr, desc = 'Step Over' })
-      --   vim.keymap.set('n', '<S-F8>', dap.step_out, { buffer = bufnr, desc = 'Step out' })
-      --   vim.keymap.set('n', '<F9>', dap.continue, { buffer = bufnr, desc = 'Continue' })
-      --   -- vim.keymap.set('n', '<leader>dc', require'dap'.continue, { buffer = bufnr, desc = 'Toggle Breakpoint' })
-      -- end
-
-      -- if client.name == "jdt.ls" then
-      --   print("dap_setup for jdt.ls in jdtls-setup")
-      --   require("jdtls").setup_dap { hotcodereplace = "auto" }
-      --   require("jdtls.dap").setup_dap_main_class_configs()
-      --   vim.lsp.codelens.refresh()
-      -- end
     end
   }
 

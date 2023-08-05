@@ -43,11 +43,11 @@ map('n', '<leader>bd', '<cmd>bdelete<cr>', { desc='Close Buffer'})
 -- Copy and Paste to Clipboard
 map({'v', 'n'}, '<leader>y', '"+y', { desc='Copy to Clipboard' })
 map('n', '<leader>Y', '"+yg_', {  })
-map({'n', 'v'}, '<leader>p', '"+p', { desc='Paste from Clipboard' })
-map({'v', 'n'}, '<leader>P', '"+P', { desc='' })
+map({'n', 'v'}, '<leader>p', '"+p', { desc='Paste from Clipboard (After cursor)' })
+map({'v', 'n'}, '<leader>P', '"+P', { desc='Paste from Clipboard (Before cursor)' })
 
 -- Open Explorer (netwr) on Left side
-map({'n'}, '<leader>e', ':Lexplore<cr>', {  })
+map({'n'}, '<leader>e', ':Lexplore<cr>', { desc='Open Explorer on the left side' })
 
 -- Open Lazy
-map('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'Open LazyVim package manager' })
+-- map('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'Open LazyVim package manager' })
