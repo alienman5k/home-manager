@@ -20,7 +20,7 @@
 
 
   programs.helix = {
-    enable = true;
+    enable = false;
     settings = {
       theme = "solarized_dark";
       editor = {
@@ -39,7 +39,7 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29;
+    # package = pkgs.emacs29;
     extraConfig = ''
       (defvar am5k/emacs-config-file
         (expand-file-name "config.org" user-emacs-directory))

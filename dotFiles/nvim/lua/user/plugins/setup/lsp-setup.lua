@@ -21,14 +21,14 @@ function M.add_lsp_keymaps(bufnr)
   vim.keymap.set('n', '<localleader>a', vim.lsp.buf.code_action, get_opts('Code Actions'))
   vim.keymap.set('n', '<localleader>r', vim.lsp.buf.rename, get_opts('Rename'))
   vim.keymap.set({'n', 'v'}, "<localleader>f", function() vim.lsp.buf.format { async = true } end, get_opts('Format'))
-  vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, get_opts('Show diagnostic'))
-  vim.keymap.set('n', '<localleader>lj', vim.diagnostic.goto_next, get_opts('Next diagnostic'))
+  -- vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, get_opts('Show diagnostic'))
+  -- vim.keymap.set('n', '<localleader>lj', vim.diagnostic.goto_next, get_opts('Next diagnostic'))
+  -- vim.keymap.set('n', '<localleader>lk', vim.diagnostic.goto_prev, get_opts('Previous diagnostic'))
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, get_opts("Next Diagnostic"))
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, get_opts("Previous Diagnostic"))
-  vim.keymap.set('n', '<localleader>lk', vim.diagnostic.goto_prev, get_opts('Previous diagnostic'))
-  vim.keymap.set('n', '<localleader>ll', '<cmd>Telescope diagnostics<cr>', get_opts('Show diagnostics list'))
-  vim.keymap.set("n", "<localleader>fs", '<cmd>Telescope lsp_document_symbols<cr>', get_opts('Document Symbols'))
-  vim.keymap.set("n", "<localleader>fr", '<cmd>Telescope lsp_references<cr>', get_opts('References'))
+  vim.keymap.set('n', '<localleader>ll', '<cmd>Telescope diagnostics<cr>', get_opts('Diagnostic [L]ist'))
+  vim.keymap.set("n", "<localleader>ls", '<cmd>Telescope lsp_document_symbols<cr>', get_opts('Document [S]ymbols'))
+  vim.keymap.set("n", "<localleader>lr", '<cmd>Telescope lsp_references<cr>', get_opts('[R]eferences'))
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, get_opts('Signature help'))
 
   M.add_dap_keymaps(bufnr)
@@ -50,8 +50,9 @@ local function on_lsp_attach(ev)
   local wc_loaded, wc = pcall(require, 'which-key')
   if wc_loaded then
     wc.register({
-      ["<localleader>l"] = { name = "+LSP Diagnostics" },
-      ["<localleader>d"] = { name = "+Debugger" }
+      -- ["<localleader>c"] = { name = "+Code" }, -- Added in jdtls-setup
+      ["<localleader>d"] = { name = "+Debugger" },
+      ["<localleader>l"] = { name = "+Telescope [L]SP" },
     }, {buffer = ev.buf})
   end
 end
@@ -96,7 +97,10 @@ function M.lsp_setup()
     settings = {
       ['rust-analyzer'] = {
         diagnostics = {
-          enable = true;
+          enable = true
+        },
+        check = {
+          command = "clippy"
         }
       }
     }

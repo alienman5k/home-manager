@@ -39,7 +39,7 @@ return {
     end, { desc = 'Find files in custom directory'})
     vim.keymap.set('n', '<leader>f/', function() builtin.find_files({cwd = vim.fs.dirname(vim.fn.expand('%'))}) end, { desc = 'Find files from current buffer directory'})
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
+    vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = 'Buffers' })
     -- vim.keymap.set('n', '<leader>ft', '<cmd>Telescope colorscheme<cr>', {})
     -- vim.keymap.set('n', '<leader>ft', builtin.colorscheme, { desc = 'Color Schemes' })
     vim.keymap.set('n', '<leader>hd', builtin.diagnostics, { desc = 'List Diagnostics' })

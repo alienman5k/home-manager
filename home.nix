@@ -41,7 +41,7 @@
     rustc
     cargo
     rustfmt
-    rust-analyzer
+    # rust-analyzer Installed using Mason in Neovim
     clippy
     #Fonts
     fira

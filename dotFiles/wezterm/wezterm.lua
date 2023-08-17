@@ -111,7 +111,7 @@ config.initial_cols = 120
 config.initial_rows = 40
 -- No tabs
 config.hide_tab_bar_if_only_one_tab = true
-config.use_fancy_tab_bar = true
+config.use_fancy_tab_bar = false
 -- config.enable_tab_bar = false
 -- Cursor config
 config.default_cursor_style = "SteadyBlock"

@@ -16,11 +16,11 @@
     enableZshIntegration = false;
     # package = pkgs.callPackage ./wezterm-bin.nix { };
   };
-  # xdg.configFile.wezterm = {
-  #   recursive = true;
-  #   source = ./dotFiles/wezterm;
-  #   target = "wezterm";
-  # };
+  xdg.configFile.wezterm = {
+    recursive = true;
+    source = ./dotFiles/wezterm;
+    target = "wezterm";
+  };
 
   #{{{
   # Kitty
@@ -73,15 +73,20 @@
     terminal = "tmux-256color";
     keyMode = "vi";
     prefix = "C-Space";
-    plugins = with pkgs.tmuxPlugins; [
-      # gruvbox
-      catppuccin
-    ];
+    # plugins = with pkgs.tmuxPlugins; [
+      # {
+      #   plugin = catppuccin;
+      #   extraConfig = ''
+      #   set -g @catppuccin_window_tabs_enabled on
+      #   set -g @catppuccin_pill_theme_enabled off
+      #   '';
+      # }
+    # ];
     extraConfig = ''
       # Neovim warnings
       set-option focus-events on
       # If tmux-256color is not available in Darwin, install local version https://github.com/tmux/tmux/issues/1257
-      set-option -ga terminal-overrides ',*-256color*:Tc'
+      set-option -ga terminal-overrides ",*-256color*:Tc"
       set-option -sg escape-time 10
       set-option -g focus-events on
 
@@ -98,6 +103,27 @@
       # Switch windows
       bind -r N swap-window -t +1 \; next-window
       bind -r P swap-window -t -1 \; previous-window
+
+      # alienman5k theme
+      set-option -g message-command-style bg=colour0,fg=colour7
+      set-option -g message-style bg=colour0,fg=colour7
+      set-option -g mode-style bg=colour1
+      set-option -g status-justify left
+      set-option -g status-left "  #{=28:session_name}  "
+      set-option -g status-left-length 32
+      set-option -g status-left-style "bg=colour10,fg=#000000,italics,bold"
+      set-option -g status-right ""
+      set-option -g status-justify centre
+      # set-option -g status-right-style "bg=colour0"
+      # set-option -g status-style "bg=#1b2229,fg=#bbc2cf"
+      set-option -g status-style "bg=colour0,fg=colour7"
+      set-option -g window-status-current-format " [#I] #W "
+      #set-option -g window-status-current-style "bg=#51afef,fg=#282c34"
+      set-option -g window-status-current-style "bg=colour4,fg=#000000,bold"
+      set-option -g window-status-format " [#I] #W "
+      set-option -g window-status-separator ""
+      set-option -g window-status-style "bg=colour0,fg=colour15,bold,fill=colour0"
+      set-option -g window-status-last-style "italics"
     '';
   };
 }
