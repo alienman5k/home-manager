@@ -14,6 +14,10 @@ vim.o.softtabstop = 2
 vim.o.expandtab = true
 -- vim.o.number = true
 vim.o.relativenumber = true
+-- Do not highligh search item
+vim.o.hlsearch = false
+vim.o.ignorecase = true
+vim.o.smartcase = true
 -- vim.o.hidden = true
 vim.o.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:+'
 vim.opt.mouse = nil
