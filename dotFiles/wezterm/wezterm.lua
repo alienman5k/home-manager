@@ -69,20 +69,52 @@ end
 wezterm.on('toggle-opacity', toggle_opacity)
 
 
-wezterm.on('change-colorscheme', function (window, _)
-  if defaults.current_color_index < #defaults.color_schemes then
-    defaults.current_color_index = defaults.current_color_index + 1
-  else
-    defaults.current_color_index = 1
+-- wezterm.on('toggle-colorscheme', function (window, _)
+--   if defaults.current_color_index < #defaults.color_schemes then
+--     defaults.current_color_index = defaults.current_color_index + 1
+--   else
+--     defaults.current_color_index = 1
+--   end
+--   -- config.color_scheme = color_schemes[current_color_index]
+--   local overrides = window:get_config_overrides() or {}
+--   overrides.color_scheme = defaults.color_schemes[defaults.current_color_index]
+--   overrides.force_reverse_video_cursor = true
+--   wezterm.log_info(overrides)
+--   window:set_config_overrides(overrides)
+--   window:toast_notification('Color Scheme changed', defaults.color_schemes[defaults.current_color_index], nil, 5000)
+-- end)
+
+wezterm.on('switch-colorscheme', function (window, pane)
+  local choices = {}
+  for name, _ in pairs(wezterm.get_builtin_color_schemes()) do
+    table.insert(choices, {id = name, label = name})
   end
-  -- config.color_scheme = color_schemes[current_color_index]
-  local overrides = window:get_config_overrides() or {}
-  overrides.color_scheme = defaults.color_schemes[defaults.current_color_index]
-  overrides.force_reverse_video_cursor = true
-  wezterm.log_info(overrides)
-  window:set_config_overrides(overrides)
-  window:toast_notification('Color Scheme changed', defaults.color_schemes[defaults.current_color_index], nil, 5000)
+  -- wezterm.log_info(choices)
+  window:perform_action(wezterm.action.InputSelector {
+    action = wezterm.action_callback(function(window, pane, id, label)
+      if not id and not label then
+        wezterm.log_info 'cancelled'
+      else
+        wezterm.log_info('Theme selected: ', id)
+        local overrides = window:get_config_overrides() or {}
+        overrides.color_scheme = id
+        overrides.force_reverse_video_cursor = true
+        window:set_config_overrides(overrides)
+      end
+    end),
+    title = 'Switch colorscheme',
+    choices = choices
+  }, pane)
 end)
+
+local set_tab_title = wezterm.action.PromptInputLine {
+  description = 'Tab name: ',
+  action = wezterm.action_callback(function (window, pane, line)
+    if line then
+      window:active_tab():set_title(line)
+    end
+  end),
+}
 
 -- wezterm.on('window-focus-changed', function(window, _)
 --   wezterm.log_info(
@@ -143,10 +175,20 @@ config.keys = {
     mods = 'SUPER',
     action = wezterm.action.EmitEvent('toggle-maximize')
   },
+  -- {
+  --   key = 't',
+  --   mods = 'SUPER|CTRL',
+  --   action = wezterm.action.EmitEvent('toggle-colorscheme')
+  -- },
   {
-    key = 't',
+    key = 's',
     mods = 'SUPER|CTRL',
-    action = wezterm.action.EmitEvent('change-colorscheme')
+    action = wezterm.action.EmitEvent('switch-colorscheme')
+  },
+  {
+    key = 'e',
+    mods = 'SUPER|CTRL',
+    action = set_tab_title
   },
   {
     key = 'o',
