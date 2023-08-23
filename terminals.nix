@@ -25,7 +25,7 @@
   #{{{
   # Kitty
   programs.kitty = {
-    enable = true;
+    enable = false;
     font = {
       # name = "Fira Code Nerd Font";
       name = "JetBrainsMono Nerd Font";
