@@ -23,6 +23,7 @@
 
   home.packages = with pkgs; [
     cfr
+    exa
     fd
     fzf
     gradle
@@ -41,12 +42,19 @@
     rustc
     cargo
     rustfmt
-    # rust-analyzer Installed using Mason in Neovim
     clippy
+    #Language servers
+    lua-language-server
+    jdt-language-server
+    nil
+    nodePackages.typescript-language-server
+    rust-analyzer
+    vscode-extensions.vscjava.vscode-java-debug
+    vscode-extensions.vscjava.vscode-java-test
     #Fonts
     fira
     fira-code
-    iosevka
+    # iosevka
     jetbrains-mono
     # roboto-mono
     # ubuntu_font_family
