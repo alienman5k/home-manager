@@ -12,10 +12,10 @@ return {
         -- refer to the configuration section below
       })
       wc.register({
-        b = { name = "Buffer" },
+        b = { name = "Buffers" },
         -- c = { name = "Code" },
         -- d = { name = "Debug" },
-        f = { name = "File" },
+        f = { name = "Find" },
         h = { name = "Help" },
         -- w = { name = "Window" },
         ['<Tab>'] = { name = 'Tabs'}

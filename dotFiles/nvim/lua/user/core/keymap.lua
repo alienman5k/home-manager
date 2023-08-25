@@ -42,7 +42,7 @@ map('n', '<leader>bd', '<cmd>bdelete<cr>', { desc='Close Buffer'})
 
 -- Copy and Paste to Clipboard
 map({'v', 'n'}, '<leader>y', '"+y', { desc='Copy to Clipboard' })
-map('n', '<leader>Y', '"+yg_', {  })
+map('n', '<leader>Y', '"+yg_', { desc='Copy from cursor to end of line to Clipboard' })
 map({'n', 'v'}, '<leader>p', '"+p', { desc='Paste from Clipboard (After cursor)' })
 map({'v', 'n'}, '<leader>P', '"+P', { desc='Paste from Clipboard (Before cursor)' })
 
