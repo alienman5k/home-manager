@@ -21,8 +21,11 @@
     };
     
     shellAliases = {
-      ll = "ls -ltrh --color";
-      lla = "ls -altrh --color";
+      ls = "exa";
+      ll = "exa -l --sort=time";
+      lls = "exa -l --sort=size";
+      lla = "exa -al --sort=time";
+      tree = "exa --tree";
       ".." = "cd ..";
       # vim = "nvim";
       vi = "nvim";
