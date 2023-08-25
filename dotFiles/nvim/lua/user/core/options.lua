@@ -21,6 +21,13 @@ vim.o.smartcase = true
 -- vim.o.hidden = true
 vim.o.listchars = 'eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:+'
 vim.opt.mouse = nil
+-- Disable providers
+vim.g.loaded_python3_provider = 0;
+vim.g.loaded_ruby_provider = 0;
+vim.g.loaded_node_provider = 0;
+vim.g.loaded_perl_provider = 0;
+-- Start netrw in tree style
+vim.g.netrw_liststyle = 3
 
 Jdtl_auto_start = true
 
