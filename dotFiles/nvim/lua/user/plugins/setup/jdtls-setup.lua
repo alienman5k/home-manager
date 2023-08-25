@@ -36,10 +36,6 @@ local function jdtls_setup()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
   local home = os.getenv('HOME')
   -- print('home: ', home)
-  local mason_home = home .. '/.local/share/nvim/mason'
-  -- print('mason home: ', mason_home)
-  local jdtls_install_dir = mason_home .. '/share/jdtls/'
-  local jdtls_config_dir = mason_home .. '/share/jdtls/config/'
   local workspace_dir = home .. '/.cache/jdtls/workspace/' .. project_name
 
   -- Define the capabilities for the LSP Client
@@ -51,27 +47,16 @@ local function jdtls_setup()
   -- Define the bundles for JSTL
   local bundles = {
     --  java-debug bundle
-    vim.fn.glob(mason_home .. '/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1)
+    vim.fn.glob(home .. '/.nix-profile/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar', 1)
   }
   -- vscode-java-test bundle
-  vim.list_extend(bundles, vim.split(vim.fn.glob(mason_home .. '/packages/java-test/extension/server/*.jar', 1), '\n'))
+  vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/.nix-profile/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar', 1), '\n'))
 
   local java_jdk_dir = "/Library/Java/JavaVirtualMachines/"
   -- Configuration to pass to the LSP Client when a Java file is open
   local config = {
     cmd = {
-      'java',
-      '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-      '-Dosgi.bundles.defaultStartLevel=4',
-      '-Declipse.product=org.eclipse.jdt.ls.core.product',
-      '-Dlog.level=ALL',
-      '-noverify',
-      '-Xmx1G',
-      '--add-modules=ALL-SYSTEM',
-      '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-      '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-      '-jar', vim.fn.glob(jdtls_install_dir .. 'plugins/org.eclipse.equinox.launcher_*.jar'),
-      '-configuration', jdtls_config_dir, -- Copied config_mac/config.ini here
+      home .. '/.nix-profile/bin/jdt-language-server',
       '-data', workspace_dir
     },
     root_dir = require('jdtls.setup').find_root({ '.git', 'pom.xml', 'build.xml', 'mvnw', 'gradlew' }),

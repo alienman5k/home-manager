@@ -15,21 +15,6 @@ return {
        require("user.plugins.setup.lsp-setup").lsp_setup()
     end,
     dependencies = {
-      -- Plugin manager to install Language Servers, formatters, DAP and linters
-      {
-        "williamboman/mason.nvim",
-        config = function()
-          require("mason").setup()
-        end,
-      },
-      {
-        "williamboman/mason-lspconfig.nvim",
-        config = function ()
-          require("mason-lspconfig").setup({
-            ensure_installed = { "lua_ls", "rust_analyzer", "jdtls" },
-          })
-        end,
-      },
       -- Debug Adapter Protocol
       {
         "mfussenegger/nvim-dap", -- LSP Debugging
@@ -98,6 +83,7 @@ return {
     "utilyre/barbecue.nvim",
     name = "barbecue",
     version = "*",
+    event = 'BufWinEnter',
     dependencies = {
       "SmiteshP/nvim-navic",
       "nvim-tree/nvim-web-devicons", -- optional dependency
