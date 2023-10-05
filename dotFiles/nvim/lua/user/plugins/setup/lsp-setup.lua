@@ -1,4 +1,4 @@
-local ok, lspconfig = pcall(require, "lspconfig")
+local ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
   return
 end
@@ -14,22 +14,22 @@ function M.add_lsp_keymaps(bufnr)
   -- This options apply to any buffer after LSP plugin has loaded, in order to add other keymaps for a particular server, use the on_attach property.
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, get_opts())
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, get_opts('Go to definition'))
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, get_opts('Go to declaration'))
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, get_opts('Go to declaration'))
   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, get_opts('Go to type'))
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, get_opts('Go to implementation'))
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, get_opts('References'))
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, get_opts('References'))
   vim.keymap.set('n', '<localleader>a', vim.lsp.buf.code_action, get_opts('Code Actions'))
   vim.keymap.set('n', '<localleader>r', vim.lsp.buf.rename, get_opts('Rename'))
-  vim.keymap.set({'n', 'v'}, "<localleader>f", function() vim.lsp.buf.format { async = true } end, get_opts('Format'))
+  vim.keymap.set({'n', 'v'}, '<localleader>f', function() vim.lsp.buf.format { async = true } end, get_opts('Format'))
   -- vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, get_opts('Show diagnostic'))
   -- vim.keymap.set('n', '<localleader>lj', vim.diagnostic.goto_next, get_opts('Next diagnostic'))
   -- vim.keymap.set('n', '<localleader>lk', vim.diagnostic.goto_prev, get_opts('Previous diagnostic'))
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, get_opts("Next Diagnostic"))
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, get_opts("Previous Diagnostic"))
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, get_opts('Next Diagnostic'))
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, get_opts('Previous Diagnostic'))
   vim.keymap.set('n', '<localleader>ll', '<cmd>Telescope diagnostics<cr>', get_opts('Diagnostic [L]ist'))
-  vim.keymap.set("n", "<localleader>ls", '<cmd>Telescope lsp_document_symbols<cr>', get_opts('Document [S]ymbols'))
-  vim.keymap.set("n", "<localleader>lr", '<cmd>Telescope lsp_references<cr>', get_opts('[R]eferences'))
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, get_opts('Signature help'))
+  vim.keymap.set('n', '<localleader>ls', '<cmd>Telescope lsp_document_symbols<cr>', get_opts('Document [S]ymbols'))
+  vim.keymap.set('n', '<localleader>lr', '<cmd>Telescope lsp_references<cr>', get_opts('[R]eferences'))
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, get_opts('Signature help'))
 
   M.add_dap_keymaps(bufnr)
 end
@@ -38,11 +38,11 @@ end
 local function on_lsp_attach(ev)
   M.add_lsp_keymaps(ev.buf)
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
-  -- print("Client name: ", client.name)
-  if client.name == "jdtls" then
-    -- print("dap_setup for jdt.ls in lsp_setup during on_lsp_attach")
-    require("jdtls").setup_dap { hotcodereplace = "auto" }
-    require("jdtls.dap").setup_dap_main_class_configs()
+  -- print('Client name: ', client.name)
+  if client.name == 'jdtls' then
+    -- print('dap_setup for jdt.ls in lsp_setup during on_lsp_attach')
+    require('jdtls').setup_dap { hotcodereplace = 'auto' }
+    require('jdtls.dap').setup_dap_main_class_configs()
     vim.lsp.codelens.refresh()
   end
 
@@ -50,9 +50,9 @@ local function on_lsp_attach(ev)
   local wc_loaded, wc = pcall(require, 'which-key')
   if wc_loaded then
     wc.register({
-      -- ["<localleader>c"] = { name = "+Code" }, -- Added in jdtls-setup
-      ["<localleader>d"] = { name = "+Debugger" },
-      ["<localleader>l"] = { name = "+Telescope [L]SP" },
+      -- ['<localleader>c'] = { name = '+Code' }, -- Added in jdtls-setup
+      ['<localleader>d'] = { name = '+Debugger' },
+      ['<localleader>l'] = { name = '+Telescope [L]SP' },
     }, {buffer = ev.buf})
   end
 end
@@ -63,23 +63,23 @@ function M.lsp_setup()
     callback = on_lsp_attach
   })
 
-  local m_capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local m_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   -- Configuration applies only to Lua LSP
   lspconfig.lua_ls.setup {
     settings = {
       Lua = {
         runtime = {
-          -- Tell the language server which version of Lua you"re using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = 'LuaJIT',
         },
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
+          globals = { 'vim' },
         },
         workspace = {
           -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file("", true),
+          library = vim.api.nvim_get_runtime_file('', true),
           checkThirdParty = false,
         },
         -- Do not send telemetry data containing a randomized but unique identifier
@@ -100,7 +100,7 @@ function M.lsp_setup()
           enable = true
         },
         check = {
-          command = "clippy"
+          command = 'clippy'
         }
       }
     }
@@ -108,7 +108,7 @@ function M.lsp_setup()
 
   local servers = { 'tsserver', 'nil_ls' }
   local on_attach = function (client, bufnr)
-    print("Attached to client", client.name, bufnr)
+    print('Attached to client', client.name, bufnr)
   end
 
   for _, server in ipairs(servers) do
@@ -121,7 +121,7 @@ function M.lsp_setup()
   -- lspconfig.nil_ls.setup({})
 
   --TODO - move JDTLS initialization here instead of java.lua by adding auto cmd for filetype
-  -- vim.api.nvim_create_augroup("JdtlsGroup")
+  -- vim.api.nvim_create_augroup('JdtlsGroup')
 
 end
 
@@ -157,39 +157,40 @@ function M.dap_setup()
   if dap_loaded then
     local dapui_loaded, dapui = pcall(require, 'dapui')
     if dapui_loaded then
-      dap.listeners.after.event_initialized["dapui_config"] = function()
+      dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open()
         vim.opt.mouse = 'a'
       end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
+      dap.listeners.before.event_terminated['dapui_config'] = function()
         dapui.close()
         vim.opt.mouse = nil
       end
-      dap.listeners.before.event_exited["dapui_config"] = function()
+      dap.listeners.before.event_exited['dapui_config'] = function()
         dapui.close()
         vim.opt.mouse = nil
       end
     end
   -- Adapters
     dap.adapters.codelldb = {
-      type = "server",
-      port = "${port}",
+      type = 'server',
+      port = '${port}',
       executable = {
-        command = "/Users/imarmole/.local/share/nvim/mason/packages/codelldb/codelldb", -- adjust as needed
-        args = {"--port", "${port}"},
+        -- command = '/Users/imarmole/.local/share/nvim/mason/bin/codelldb', -- adjust as needed
+        command = 'codelldb', -- adjust as needed
+        args = {'--port', '${port}'},
       },
-      name = "codelldb",
+      name = 'codelldb',
     }
     -- Configurations
     dap.configurations.rust = {
       {
-        name = "Launch file",
-        type = "codelldb",
-        request = "launch",
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
         end,
-        cwd = "${workspaceFolder}",
+        cwd = '${workspaceFolder}',
         stopOnEntry = false,
         -- args = {},
         -- runInTerminal = false,

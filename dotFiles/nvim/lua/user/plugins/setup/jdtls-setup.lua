@@ -1,22 +1,22 @@
 local M = {}
 
 local function lspconfig_setup()
-  -- print("Start lspconfig_setup")
-  local _loaded, lspconfig = pcall(require, "lspconfig")
+  -- print('Start lspconfig_setup')
+  local _loaded, lspconfig = pcall(require, 'lspconfig')
   if _loaded then
     lspconfig.jdtls.setup({
-      cmd = { 'jdtls' }
+      cmd = { 'jdt-language-server' }
     })
   end
 end
 
 local function add_jdtls_keymaps(bufnr)
   local jdtls = require('jdtls')
-  vim.keymap.set('n', '<localleader>co', jdtls.organize_imports, { buffer = bufnr, desc = 'Organize Imports' })
-  vim.keymap.set('n', '<localleader>cu', jdtls.update_project_config, { buffer = bufnr, desc = 'Update project config' })
+  vim.keymap.set('n', '<localleader>o', jdtls.organize_imports, { buffer = bufnr, desc = 'Organize Imports' })
+  vim.keymap.set('n', '<localleader>u', jdtls.update_project_config, { buffer = bufnr, desc = 'Update project config' })
   vim.keymap.set('n', '<localleader>cc', function() jdtls.compile('incremental') end, { buffer = bufnr, desc = 'Compile Incremental' })
   vim.keymap.set('n', '<localleader>cc', function() jdtls.compile('full') end, { buffer = bufnr, desc = 'Compile Full' })
-  vim.keymap.set('n', '<localleader>cb', jdtls.build_projects, { buffer = bufnr, desc = 'Build' })
+  vim.keymap.set('n', '<localleader>cb', jdtls.build_projects, { buffer = bufnr, desc = 'Build Projects' })
   vim.keymap.set('n', '<localleader>tc', jdtls.test_class, { buffer = bufnr, desc = 'Test class' })
   vim.keymap.set('n', '<localleader>tt', jdtls.test_nearest_method, { buffer = bufnr, desc = 'Test nearest method' })
   vim.keymap.set('n', '<localleader>tp', jdtls.pick_test, { buffer = bufnr, desc = 'Pick test to run' })
@@ -25,14 +25,14 @@ local function add_jdtls_keymaps(bufnr)
   local wc_loaded, wc = pcall(require, 'which-key')
   if wc_loaded then
     wc.register({
-      ["<localleader>c"] = { name = "+Code" },
-      ["<localleader>t"] = { name = "+Test" }
+      ['<localleader>c'] = { name = '+Code' },
+      ['<localleader>t'] = { name = '+Test' }
     }, {buffer = bufnr})
   end
 end
 
 local function jdtls_setup()
-  -- print("Start jdtls_setup")
+  -- print('Start jdtls_setup')
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
   local home = os.getenv('HOME')
   -- print('home: ', home)
@@ -52,7 +52,7 @@ local function jdtls_setup()
   -- vscode-java-test bundle
   vim.list_extend(bundles, vim.split(vim.fn.glob(home .. '/.nix-profile/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar', 1), '\n'))
 
-  local java_jdk_dir = "/Library/Java/JavaVirtualMachines/"
+  local java_jdk_dir = '/Library/Java/JavaVirtualMachines/'
   -- Configuration to pass to the LSP Client when a Java file is open
   local config = {
     cmd = {
@@ -68,23 +68,23 @@ local function jdtls_setup()
           -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
           runtimes = {
             {
-              name = "JavaSE-1.8",
-              path = vim.fn.glob(java_jdk_dir .. "jdk1.8.*.jdk/Contents/Home/")
+              name = 'JavaSE-1.8',
+              path = vim.fn.glob(java_jdk_dir .. 'jdk1.8.*.jdk/Contents/Home/')
             },
             {
-              name = "JavaSE-11",
-              path = vim.fn.glob(java_jdk_dir .. "jdk-11.*.jdk/Contents/Home/")
+              name = 'JavaSE-11',
+              path = vim.fn.glob(java_jdk_dir .. 'jdk-11.*.jdk/Contents/Home/')
             },
             {
-              name = "JavaSE-17",
-              path = vim.fn.glob(java_jdk_dir .. "jdk-17.*.jdk/Contents/Home/")
+              name = 'JavaSE-17',
+              path = vim.fn.glob(java_jdk_dir .. 'jdk-17.*.jdk/Contents/Home/')
             },
           }
         },
         format = {
           enabled = true,
           settings = {
-            url = "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+            url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml'
           }
         }
       }
@@ -119,9 +119,9 @@ end
 function M.init()
   Jdtl_auto_start = true
   -- To refresh the current buffer where JdtInitis called
-  vim.cmd("edit")
+  vim.cmd('edit')
 end
 
-vim.api.nvim_create_user_command("JdtInit", M.init, { desc = "Initialize jdtls", nargs = 0,})
+vim.api.nvim_create_user_command('JdtInit', M.init, { desc = 'Initialize jdtls', nargs = 0,})
 
 return M

@@ -1,5 +1,6 @@
 local ok, cmp = pcall(require, "cmp")
 if not ok or cmp == nil then
+  vim.notify("cmp plugin not loaded, make sure it is installed and enabled", vim.log.levels.ERROR)
   return
 end
 

@@ -41,6 +41,10 @@ function nix-hm-proxy() {
   sudo launchctl kickstart -k system/org.nixos.nix-daemon
 }
 
+function set_term_title() {
+  echo -ne "\033]0;$1\007"
+}
+
 function oci-ssh-setup() {
   source $FACP_SSH_HOME/aliases
 }
@@ -81,5 +85,15 @@ function switch-java() {
   export PATH=$JAVA_HOME/bin:$PATH
   java -version
   echo '-----------------------------------------------------------------'
-
 }
+
+
+workpass() {
+  PASSWORD_STORE_DIR=$XDG_DATA_HOME/work-password-store pass $@
+}
+
+_workpass() {
+  PASSWORD_STORE_DIR=$XDG_DATA_HOME/work-password-store _pass
+}
+zstyle ':completion::complete:workpass::' prefix "$XDG_DATA_HOME/work-password-store"
+compdef _workpass workpass

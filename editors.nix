@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  # nixpkgs.overlays = [
+  # nixpkgs. = [
   #   (import (builtins.fetchTarball {
   #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
   #   }))
@@ -9,7 +9,6 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    # package = pkgs.neovim-nightly;
   };
 
   xdg.configFile.nvim = {
@@ -39,19 +38,24 @@
 
   programs.emacs = {
     enable = true;
+    # package = pkgs.emacs-29;
     extraPackages = epkgs: [
+      epkgs.catppuccin-theme
       epkgs.consult
       epkgs.corfu
       epkgs.doom-themes
+      epkgs.ef-themes
       epkgs.eglot
       epkgs.evil 
       epkgs.evil-collection
       epkgs.evil-commentary
-      epkgs.ef-themes
+      epkgs.exec-path-from-shell
       epkgs.lua-mode
-      epkgs.nix-mode
       epkgs.magit 
       epkgs.marginalia 
+      epkgs.nix-mode
+      epkgs.ns-auto-titlebar
+      # epkgs.ob-mermaid
       epkgs.orderless
       epkgs.org-contrib
       epkgs.rust-mode
@@ -60,6 +64,7 @@
       epkgs.tree-sitter-langs
       epkgs.use-package
       epkgs.vertico
+      epkgs.vterm
       epkgs.which-key
     ];
     # package = pkgs.emacsMacport;

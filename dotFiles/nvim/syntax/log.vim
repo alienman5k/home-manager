@@ -9,6 +9,7 @@ endif
 
 let s:cpo_save = &cpoptions
 set cpoptions&vim
+set cursorline
 
 "TimeStamp
 syn match logDate '\d\{2,4}[-\/]\(\d\{2}\|Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Oct\|Nov\|Dec\)[-\/]\d\{2,4}T\?'
@@ -20,6 +21,7 @@ syn match logTime '\d\{2}:\d\{2}:\d\{2}'
 
 syn match logServer '\(\|UI\|Service\|ESS_SOA\)Server_\d\+'
 " syn region logSource start="APPS_SOURCE"ms=e+2 end="APPS_TERRITORY"me=s-4
+syn region logUser start="\[APPS_USER_NAME"ms=e+2 end="\]"me=s-1
 syn region logSource start="\[APPS_SOURCE"ms=e+2 end="\]"me=s-1
 syn region logMsg start="SRC_METHOD\: publish"ms=e+2 end="\n"
 
@@ -44,6 +46,7 @@ hi def link logDate Type
 hi def link logTime Constant
 
 hi def link logServer Identifier
+hi def link logUser StorageClass
 hi def link logSource StorageClass
 hi def link logMsg String
 hi def link logStartMethod Function

@@ -27,7 +27,7 @@ return {
     },
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
-
+  -- Nix
   {
     'LnL7/vim-nix',
     ft = 'nix',

@@ -175,6 +175,11 @@ config.keys = {
     mods = 'SUPER',
     action = wezterm.action.EmitEvent('toggle-maximize')
   },
+  {
+    key = "Enter",
+    mods = 'CTRL',
+    action = wezterm.action.EmitEvent('toggle-maximize')
+  },
   -- {
   --   key = 't',
   --   mods = 'SUPER|CTRL',

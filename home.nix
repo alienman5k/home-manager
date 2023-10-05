@@ -23,7 +23,7 @@
 
   home.packages = with pkgs; [
     cfr
-    exa
+    eza
     fd
     fzf
     gradle
@@ -51,6 +51,7 @@
     rust-analyzer
     vscode-extensions.vscjava.vscode-java-debug
     vscode-extensions.vscjava.vscode-java-test
+    # vscode-extensions.vadimcn.vscode-lldb #codelldb
     #Fonts
     fira
     fira-code
@@ -59,7 +60,7 @@
     # roboto-mono
     # ubuntu_font_family
     (nerdfonts.override {
-      fonts = [ "FiraCode" "JetBrainsMono" "UbuntuMono" ];
+      fonts = [ "FiraCode" "JetBrainsMono" "UbuntuMono" "IBMPlexMono" ];
     })
 
     #End Fonts

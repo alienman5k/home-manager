@@ -14,6 +14,8 @@ vim.o.softtabstop = 2
 vim.o.expandtab = true
 -- vim.o.number = true
 vim.o.relativenumber = true
+vim.o.cursorline = true
+vim.o.cursorlineopt = "number"
 -- Do not highligh search item
 vim.o.hlsearch = false
 vim.o.ignorecase = true
