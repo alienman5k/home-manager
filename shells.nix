@@ -21,20 +21,19 @@
     };
     
     shellAliases = {
-      ls = "exa";
-      ll = "exa -l --sort=time";
-      lls = "exa -l --sort=size";
-      lla = "exa -al --sort=time";
-      tree = "exa --tree";
       ".." = "cd ..";
       # vim = "nvim";
       vi = "nvim";
-      pass_work = "PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store pass";
+      # pass_work = "PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store pass";
     };
 
     sessionVariables = {
       EDITOR = "nvim";
     };
+
+    initExtraBeforeCompInit = ''
+      fpath=($HOME/.config/zsh/plugins/completions $fpath)
+    '';
 
     initExtra = ''
       bindkey "^[[3~" delete-char
@@ -44,9 +43,9 @@
         source $HOME/.config/zsh/plugins/functions.plugin.zsh
       fi
       if [[ -f "$HOME/.config/zsh/plugins/profiles.plugin.zsh" ]]; then
+        # Set exports and aliases
         source $HOME/.config/zsh/plugins/profiles.plugin.zsh
       fi
-      fpath=($HOME/.config/zsh/plugins/completions $fpath)
     '';
 
     # plugins = [

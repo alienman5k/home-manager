@@ -2,7 +2,7 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = true;
+    enable = false;
   };
   xdg.configFile.alacritty = {
     recursive = true;
@@ -25,10 +25,10 @@
   #{{{
   # Kitty
   programs.kitty = {
-    enable = false;
+    enable = true;
     font = {
       # name = "Fira Code Nerd Font";
-      name = "JetBrainsMono Nerd Font";
+      name = "BlexMono Nerd Font";
       size = 12;
     };
     # theme = "Gruvbox Dark";
