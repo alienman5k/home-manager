@@ -32,6 +32,7 @@
     maven
     nodejs
     nodePackages.typescript
+    oci-cli
     p7zip
     plantuml
     ripgrep
@@ -55,12 +56,13 @@
     #Fonts
     fira
     fira-code
-    # iosevka
+    iosevka
     jetbrains-mono
+    # monaspace
     # roboto-mono
     # ubuntu_font_family
     (nerdfonts.override {
-      fonts = [ "FiraCode" "JetBrainsMono" "UbuntuMono" "IBMPlexMono" ];
+      fonts = [ "FiraCode" "JetBrainsMono" "IBMPlexMono" ];
     })
 
     #End Fonts

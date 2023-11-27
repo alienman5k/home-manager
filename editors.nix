@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   # nixpkgs. = [
   #   (import (builtins.fetchTarball {
@@ -58,6 +58,7 @@
       # epkgs.ob-mermaid
       epkgs.orderless
       epkgs.org-contrib
+      epkgs.rainbow-delimiters
       epkgs.rust-mode
       epkgs.tempel
       epkgs.tree-sitter

@@ -5,7 +5,7 @@
 }:
 pkgs.stdenv.mkDerivation rec {
   pname = "Wezterm";
-  version = "20230408-112425-69ae8472";
+  version = "20230712-072601-f4abf8fd";
 
   phases = ["installPhase"];
   installPhase = ''
@@ -19,7 +19,7 @@ pkgs.stdenv.mkDerivation rec {
 
   src = pkgs.fetchzip {
     url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
-    sha256 = "sha256-JsCcJSqve5Trk8UE7Ma405CyDafw6UPXZA78QZHYrvo=";
+    sha256 = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
   };
 
   inherit (pkgs.wezterm) meta;

@@ -14,7 +14,7 @@
     enable = true;
     enableBashIntegration = false;
     enableZshIntegration = false;
-    # package = pkgs.callPackage ./wezterm-bin.nix { };
+    package = pkgs.callPackage ./wezterm-bin.nix { };
   };
   xdg.configFile.wezterm = {
     recursive = true;
@@ -29,10 +29,9 @@
     font = {
       # name = "Fira Code Nerd Font";
       name = "BlexMono Nerd Font";
-      size = 12;
+      size = 14;
     };
-    # theme = "Gruvbox Dark";
-    theme = "Catppuccin-Mocha";
+    theme = "GitHub Dark";
     settings = {
       # Shell Integration
       shell_integration = "no-cursor";
@@ -51,6 +50,7 @@
       # Window 
       hide_window_decorations = "titlebar-only";
       # macos_titlebar_color = "system";
+      macos_option_as_alt = "yes";
     };
     extraConfig = ''
       map cmd+plus change_font_size all +1.0
