@@ -9,19 +9,6 @@ local defaults = {
   maximized = false,
   opacity = 0.92,
   blur = 15,
-  color_schemes = {
-    'Catppuccin Mocha',
-    'Japanesque',
-    'Classic Dark (base16)',
-    'Solarized Dark Higher Contrast',
-    'GruvboxDark',
-    'Tomorrow Night',
-    'terafox',
-    'Banana Blueberry',
-    'OneHalfDark',
-    'Ubuntu'
-  },
-  current_color_index = 1
 }
 
 -- In newer versions of wezterm, use the config_builder which will
@@ -127,7 +114,7 @@ local set_tab_title = wezterm.action.PromptInputLine {
 -- end)
 
 -- config.color_scheme = 'Gruvbox Dark'
-config.color_scheme = defaults.color_schemes[defaults.current_color_index]
+config.color_scheme = 'Catppuccin Mocha'
 -- Font Configuration
 config.font_size = 14
 config.adjust_window_size_when_changing_font_size = false
