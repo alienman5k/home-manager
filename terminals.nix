@@ -58,6 +58,7 @@
       map cmd+minus change_font_size all -1.0
       map cmd+0 change_font_size all 0
       map cmd+shift+enter toggle_maximized
+      map ctrl+enter toggle_maximized
     '';
   };
   #}}}
