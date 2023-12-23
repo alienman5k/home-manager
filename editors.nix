@@ -38,7 +38,7 @@
 
   programs.emacs = {
     enable = true;
-    # package = pkgs.emacs-29;
+    package = pkgs.emacs29;
     extraPackages = epkgs: [
       epkgs.catppuccin-theme
       epkgs.consult
@@ -50,10 +50,13 @@
       epkgs.evil-collection
       epkgs.evil-commentary
       epkgs.exec-path-from-shell
+      epkgs.general
       epkgs.lua-mode
       epkgs.magit 
       epkgs.marginalia 
+      epkgs.markdown-mode
       epkgs.nix-mode
+      epkgs.nix-ts-mode
       epkgs.ns-auto-titlebar
       # epkgs.ob-mermaid
       epkgs.orderless
@@ -61,8 +64,8 @@
       epkgs.rainbow-delimiters
       epkgs.rust-mode
       epkgs.tempel
-      epkgs.tree-sitter
-      epkgs.tree-sitter-langs
+      # epkgs.tree-sitter
+      # epkgs.tree-sitter-langs
       epkgs.use-package
       epkgs.vertico
       epkgs.vterm
