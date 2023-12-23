@@ -26,15 +26,17 @@ return
       "json5",
       -- "ledger",
       "lua",
-      -- "python",
+      "markdown",
       "nix",
+      -- "python",
       "rust",
     },
   },
   config = function (_, opts)
     require('nvim-treesitter.configs').setup(opts)
-    vim.o.foldmethod = "expr"
-    vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-    vim.o.foldenable = false
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.opt.foldlevel = 2
+    vim.opt.foldenable = false
   end,
 }

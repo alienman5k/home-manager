@@ -106,6 +106,11 @@ function M.lsp_setup()
     }
   }
 
+  lspconfig.jsonls.setup({
+    capabilities = m_capabilities,
+    cmd = { "vscode-json-languageserver", "--stdio" }
+  })
+
   local servers = { 'tsserver', 'nil_ls' }
   local on_attach = function (client, bufnr)
     print('Attached to client', client.name, bufnr)

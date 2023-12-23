@@ -34,6 +34,7 @@
     nodePackages.typescript
     oci-cli
     p7zip
+    pandoc
     plantuml
     ripgrep
     tmux
@@ -48,6 +49,7 @@
     lua-language-server
     jdt-language-server
     nil
+    nodePackages.vscode-json-languageserver
     nodePackages.typescript-language-server
     rust-analyzer
     vscode-extensions.vscjava.vscode-java-debug
