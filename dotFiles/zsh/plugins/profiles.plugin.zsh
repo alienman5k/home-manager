@@ -22,14 +22,14 @@ alias lla='ls -altrhGF'
 alias docker=podman
 alias vi="nvim"
 alias v="nvim"
-alias sopen='fd | fzf-tmux -p | xargs $EDITOR'
+alias vop='fd | fzf-tmux -p | xargs $EDITOR'
+alias vo='fd | fzf-tmux | xargs $EDITOR'
 # https://www.atlassian.com/git/tutorials/dotfiles
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias lcfg='lazygit --git-dir=$HOME/.cfg --work-tree=$HOME'
 
 ls_alias=$(which eza)
 if [ -x "$ls_alias" ]; then
-  alias ls="eza"
   alias ll="eza -l --sort=time"
   alias lls="eza -l --sort=size"
   alias lla="eza -al --sort=time"
