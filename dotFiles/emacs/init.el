@@ -15,7 +15,7 @@
 ;;; UI Changes
 ;;;; Fonts
 (set-face-attribute 'default nil
-		    :font "BlexMono Nerd Font Mono"
+		    :font "BlexMono Nerd Font"
 		    :weight 'normal
 		    :width 'normal
 		    :height 130)
@@ -48,9 +48,21 @@
 	:config
 	(ns-auto-titlebar-mode))
 
-(use-package ef-themes
-  :config
-  (ef-themes-select 'ef-light t))
+(load-theme 'doom-one 1)
+;; (load-theme 'ef-light 1)
+;; (use-package ef-themes)
+;; (use-package ef-themes
+;;   :config
+;;   (ef-themes-select 'ef-light t))
+
+;; (defun am5k/apply-system-theme(appearance)
+;;   "Apply a light or dark theme depending on the APPEARANCE of the system."
+;;   (mapc #'disable-theme custom-enabled-themes)
+;;   (pcase appearance
+;;     ('light (load-theme ef-light t))
+;;     ('dark (load-theme ef-night t))))
+
+;; (add-hook 'ns-system-appearance-change-functions #'am5k/apply-system-theme)
  
 (use-package which-key
   :config
@@ -60,16 +72,25 @@
 (use-package org
   :mode (("\\.org$" . org-mode))
   ;;:ensure org-plus-contrib
+	:init
+	(custom-theme-set-faces
+	 'user
+	 `(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+	 `(org-level-2 ((t (:inherit outline-2 :height 1.2))))
+	 `(org-level-3 ((t (:inherit outline-3 :height 1.15))))
+	 `(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+	 `(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
   :custom
   (org-edit-src-content-indentation 0)
   (org-ellipsis " ↘")
   (org-export-backends '(ascii html odt md))
+	(org-hide-leading-stars 1)
   (org-confirm-babel-evaluate
-	(lambda (lang body)
-	  (and (not (string= lang "emacs-lisp"))
-	       (not (string= lang "elisp"))
-	       (not (string= lang "restclient"))
-	       (not (string= lang "python"))))))
+	 (lambda (lang body)
+		 (and (not (string= lang "emacs-lisp"))
+					(not (string= lang "elisp"))
+					(not (string= lang "restclient"))
+					(not (string= lang "python"))))))
 
 ;;; External Packages
 ;;;; Evil Mode
@@ -93,6 +114,47 @@
   :config
   (evil-commentary-mode))
 
+;;;; General
+(use-package general
+  :after evil
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "" '(nil :which-key "Leader Key")
+   "f" '(:ignore t :which-key "File")
+   "ff" 'find-file
+   "fs" 'save-buffer
+   "fn" 'evil-buffer-new
+   "fg" 'consult-find
+   "b" '(:ignore t :which-key "Buffer")
+   "bb" 'consult-buffer
+   "bn" 'evil-next-buffer
+   "bp" 'evil-prev-buffer
+   "h" '(:keymap help-map :which-key "Help")
+   "ht" 'consult-theme
+   ;; "hf" 'helpful-callable
+   ;; "hk" 'helpful-key
+   ;; "ho" 'helpful-symbol
+   ;; "hv" 'helpful-variable
+   "s" '(:keymap search-map :which-key "Search")
+   ;; "s" '(:ignore t :which-key "Search")
+   "sl" 'consult-line
+   "sg" 'consult-grep
+   "p" '(:keymap project-prefix-map :which-key "Project")
+   ;; "p" '(:ignore t :which-key "Project")
+   ;; "pp" 'project-switch-project
+   ;; "pf" 'project-find-file
+   ;; "pd" 'project-dired
+   ;; "ps" 'project-shell
+   "t" '(:ignore t :which-key "Tabs")
+   "tt" 'tab-new
+   "tn" 'tab-next
+   "tp" 'tab-previous
+   "tc" 'tab-close
+   "tm" 'tab-move
+   "tr" 'tab-rename))
+
 ;;;; Orderless
 (use-package orderless
   :custom
@@ -110,22 +172,28 @@
 ;;;; Vertico
 (use-package vertico
   :init (vertico-mode 1)
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
+  :bind (:map vertico-map
+	      ("\r" . vertico-directory-enter)
+	      ("\d" . vertico-directory-delete-char)
+	      ("\M-\d" . vertico-directory-delete-word))
   :config
   (setq vertico-cycle t)
   ;;; History mode
   (savehist-mode t)
   (save-place-mode 1)
   (recentf-mode 1))
-(use-package vertico-directory
-  ;; :straight nil
-  ;; :load-path "straight/build/vertico/extensions/"
-  :after vertico
-  ;; this adds -hook explicitly so we need to remove the -hook portion
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
-  :bind (:map vertico-map
-	      ("\r" . vertico-directory-enter)
-	      ("\d" . vertico-directory-delete-char)
-	      ("\M-\d" . vertico-directory-delete-word)))
+
+;; (use-package vertico-directory
+;;   ;; :straight nil
+;;   :load-path "straight/build/vertico/extensions/"
+;;   :after vertico
+;;   ;; this adds -hook explicitly so we need to remove the -hook portion
+;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
+;;   :bind (:map vertico-map
+;; 	      ("\r" . vertico-directory-enter)
+;; 	      ("\d" . vertico-directory-delete-char)
+;; 	      ("\M-\d" . vertico-directory-delete-word)))
 
 
 ;;;; Eglot
@@ -136,6 +204,8 @@
   (rust-mode . eglot-ensure)
   (lua-mode . eglot-ensure)
   (java-mode . eglot-ensure)
+  (json-mode . eglot-ensure)
+  (json-ts-mode . eglot-ensure)
   (nix-mode . eglot-ensure)
   :bind (:map eglot-mode-map
 	      ("C-c r" . eglot-rename)
@@ -149,8 +219,8 @@
 
 (use-package java-mode
 	:mode (("\\.java$" . java-mode))
-	:hook
-	(java-mode . tree-sitter-hl-mode)
+	;; :hook
+	;; (java-mode . tree-sitter-hl-mode)
   :custom
   (c-basic-offset 2)
   (tab-width 2)
@@ -158,58 +228,87 @@
 
 (use-package rust-mode
 	:mode ("\\.rs$" . rust-mode)
-	:hook
-	(rust-mode . tree-sitter-hl-mode)
+	;; :hook
+	;; (rust-mode . tree-sitter-hl-mode)
 	:custom
   (c-basic-offset 2)
   (tab-width 2)
   (indent-tabs-mode t))
 
+;; (use-package markdown-mode
+;; 	:mode ("\\.md\\'" . gfm-mode))
+
+;; (use-package json-mode
+;; 	:mode ("\\.json$" . json-mode)
+;; 	:hook (hs-minor-mode . json-mode)
+;; 	;; :init
+;; 	;; (when (not (treesit-install-language-grammar 'json))
+;; 	;; 	(treesit-install-language-grammar 'json))
+;; 	:custom
+;;   (c-basic-offset 2)
+;;   (tab-width 2)
+;;   (indent-tabs-mode nil))
+
+(use-package json-ts-mode
+ 	:mode ("\\.json$" . json-ts-mode)
+	;; :hook (json-ts-mode . hs-minor-mode)
+	:custom
+  (c-basic-offset 2)
+  (tab-width 2)
+  (indent-tabs-mode nil))
+
 (use-package nix-mode
-	;; :ensure t
 	:mode "\\.nix$\\'"
-	:hook
-	(nix-mode . tree-sitter-hl-mode)
+	;; :hook
+	;; (nix-mode . tree-sitter-hl-mode)
 	:custom
   (c-basic-offset 2)
   (tab-width 2)
   (indent-tabs-mode t))
 
 ;;;; Tree Sitter
-(use-package tree-sitter)
-(use-package tree-sitter-langs
-  :after tree-sitter)
-;; (setq treesit-language-source-alist
-;;    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-;;      (cmake "https://github.com/uyha/tree-sitter-cmake")
-;;      (css "https://github.com/tree-sitter/tree-sitter-css")
-;;      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-;;      (go "https://github.com/tree-sitter/tree-sitter-go")
-;;      (html "https://github.com/tree-sitter/tree-sitter-html")
-;;      (java "https://github.com/tree-sitter/tree-sitter-java" "master" "src")
-;;      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-;;      (json "https://github.com/tree-sitter/tree-sitter-json")
-;; 		 (nix "https://github.com/nix-community/tree-sitter-nix")
-;;      (make "https://github.com/alemuller/tree-sitter-make")
-;;      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-;;      (python "https://github.com/tree-sitter/tree-sitter-python")
-;;      (rust "https://github.com/tree-sitter/tree-sitter-rust")
-;;      (toml "https://github.com/tree-sitter/tree-sitter-toml")
-;;      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-;;      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-;;      (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+;; (use-package tree-sitter)
+;; (use-package tree-sitter-langs
+;;   :after tree-sitter)
 
-;; (setq major-mode-remap-alist
-;;  '((yaml-mode . yaml-ts-mode)
-;;    (bash-mode . bash-ts-mode)
-;;    (java-mode . java-ts-mode)
-;;    (js2-mode . js-ts-mode)
-;;    (typescript-mode . typescript-ts-mode)
-;;    (json-mode . json-ts-mode)
-;;    (css-mode . css-ts-mode)
-;;    (python-mode . python-ts-mode)
-;;    ;; (nix-mode . nix-ts-mode)
-;; 	 (rust-mode . rust-ts-mode)))
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (java "https://github.com/tree-sitter/tree-sitter-java" "master" "src")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+		 (nix "https://github.com/nix-community/tree-sitter-nix")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (rust "https://github.com/tree-sitter/tree-sitter-rust")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+(setq major-mode-remap-alist
+ '((yaml-mode . yaml-ts-mode)
+   (bash-mode . bash-ts-mode)
+   (java-mode . java-ts-mode)
+   (js2-mode . js-ts-mode)
+   (typescript-mode . typescript-ts-mode)
+   (json-mode . json-ts-mode)
+   (css-mode . css-ts-mode)
+   (python-mode . python-ts-mode)
+   ;; (markdown-mode . markdown-ts-mode)
+   (nix-mode . nix-ts-mode)
+	 (rust-mode . rust-ts-mode)))
+
+;; (setq treesit-enabled-langs-alist
+;; 			(bash elisp html java javascript json nix rust))
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+;; (add-hook 'hs-minor-mode-hook #'json-ts-mode)
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 
 ;; Configure Tempel
 (use-package tempel
@@ -241,6 +340,12 @@
   ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   ;; (global-tempel-abbrev-mode)
 ) ;; end tempel
+
+(use-package tempel-collection
+	:after tempel)
+
+(use-package eglot-tempel
+	:after eglot)
 
 (use-package vterm
 	:hook
