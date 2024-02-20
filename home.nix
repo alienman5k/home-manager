@@ -22,38 +22,17 @@
   # Home Manage Search Options link: https://mipmip.github.io/home-manager-option-search/
 
   home.packages = with pkgs; [
-    cfr
     eza
     fd
     fzf
-    gradle
-    jd-gui
     jq
-    maven
-    nodejs
-    nodePackages.typescript
     oci-cli
     p7zip
     pandoc
     plantuml
     ripgrep
     tmux
-    html-tidy
     wget
-    #Rust
-    rustc
-    cargo
-    rustfmt
-    clippy
-    #Language servers
-    lua-language-server
-    jdt-language-server
-    nil
-    nodePackages.vscode-json-languageserver
-    nodePackages.typescript-language-server
-    rust-analyzer
-    vscode-extensions.vscjava.vscode-java-debug
-    vscode-extensions.vscjava.vscode-java-test
     # vscode-extensions.vadimcn.vscode-lldb #codelldb
     #Fonts
     fira
@@ -134,6 +113,11 @@
   };
 
   imports = [
+    ./dev/java.nix
+    ./dev/rust.nix
+    ./dev/go.nix
+    ./dev/js.nix
+    ./dev/others.nix
     ./shells.nix
     ./editors.nix
     ./terminals.nix
