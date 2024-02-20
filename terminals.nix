@@ -2,24 +2,52 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = false;
+    enable = true;
+    settings = {
+      font = {
+        size = 14.0;
+        normal = {
+          family = "FiraCode Nerd Font";
+          style = "Regular";
+        };
+        italic = {
+          style = "Italic";
+        };
+      };
+      window = {
+        decorations = "buttonless";
+        dynamic_title = true;
+        opacity = 0.95;
+        startup_mode = "Maximized";
+        dimensions.columns = 180;
+        dimensions.lines = 50;
+        padding.x = 5;
+        padding.y = 2;
+      };
+      keyboard.bindings = [
+        { key = "B"; mods = "Alt"; chars = "\\u001Bb"; }
+        { key = "F"; mods = "Alt"; chars = "\\u001Bf"; }
+        { key = "Return"; mods = "Control"; action = "ToggleMaximized"; }
+        { key = "Return"; mods = "Control|Shift"; action = "ToggleFullscreen"; }
+      ];
+      scrolling.history = 10000;
+    };
   };
   xdg.configFile.alacritty = {
+    # enable = config.programs.alacritty.enable;
+    enable = false;
     recursive = true;
     source = ./dotFiles/alacritty;
     target = "alacritty";
   };
+
   # Wezterm
   programs.wezterm = {
-    enable = true;
+    enable = false;
     enableBashIntegration = false;
     enableZshIntegration = false;
+    extraConfig = builtins.readFile ./dotFiles/wezterm/wezterm.lua;
     package = pkgs.callPackage ./wezterm-bin.nix { };
-  };
-  xdg.configFile.wezterm = {
-    recursive = true;
-    source = ./dotFiles/wezterm;
-    target = "wezterm";
   };
 
   #{{{
@@ -31,6 +59,7 @@
       name = "BlexMono Nerd Font";
       size = 14;
     };
+    shellIntegration.enableZshIntegration = false;
     theme = "GitHub Dark";
     settings = {
       # Shell Integration
@@ -45,8 +74,10 @@
       # Tab Bar
       tab_bar_edge = "top";
       tab_title_template = "{index}: {title} ";
-      tab_bar_style = "powerline";
-      tab_powerline_style = "round";
+      tab_bar_style = "fade";
+      # tab_bar_style = "powerline";
+      # tab_powerline_style = "slanted";
+      active_tab_background = "#710daa";
       # Window 
       hide_window_decorations = "titlebar-only";
       # macos_titlebar_color = "system";

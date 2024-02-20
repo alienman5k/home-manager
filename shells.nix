@@ -22,8 +22,8 @@
     
     shellAliases = {
       ".." = "cd ..";
-      # vim = "nvim";
       vi = "nvim";
+      ls = "ls --color";
       # pass_work = "PASSWORD_STORE_DIR=${config.xdg.dataHome}/work-password-store pass";
     };
 
