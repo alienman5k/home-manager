@@ -29,4 +29,12 @@ return {
       transparent = false,
     }
   },
+  {
+    'folke/tokyonight.nvim',
+    opts = {
+      style = 'night',
+      transparent = false,
+      hide_inactive_statusline = false,
+    }
+  }
 }

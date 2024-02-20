@@ -1,6 +1,7 @@
 -- Global settings for NeoVim
 vim.opt.termguicolors = true
 ColorScheme = 'catppuccin-mocha'
+-- ColorScheme = 'tokyonight'
 -- local g = vim.g
 -- g.loaded_netrw = 0 -- 1 means disabled
 -- g.loaded_netrwPlugin = 0 -- 1 means disabled

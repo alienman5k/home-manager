@@ -94,11 +94,15 @@ function M.lsp(active)
     count[k] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
   end
 
+  local lsp_status = ""
   local errors = ""
   local warnings = ""
   local hints = ""
   local info = ""
 
+  -- if vim.lsp.buf.server_ready() then
+  --   lsp_status = ""
+  -- end
   if count["errors"] ~= 0 then
     errors = string.format("%s%sE ", '%#SLDiagnosticError#', count["errors"])
   end
@@ -112,7 +116,7 @@ function M.lsp(active)
     info = string.format("%s%sI ", '%#SLDiagnosticInfo#', count["info"])
   end
 
-  return errors .. warnings .. hints .. info .. sl_clear
+  return lsp_status .. errors .. warnings .. hints .. info .. sl_clear
 end
 
 StatusLine = {
