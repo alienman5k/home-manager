@@ -2,7 +2,7 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = false;
+    enable = true;
     settings = {
       font = {
         size = 14.0;
@@ -134,8 +134,11 @@
       bind -r N swap-window -t +1 \; next-window
       bind -r P swap-window -t -1 \; previous-window
 
+      # Reload file changes
+      bind r source-file $HOME/.config/tmux/tmux.conf \; display "Configuration Reloaded!"
+
       # alienman5k theme
-      source ./themes/alienman5k.conf
+      source $HOME/.config/tmux/themes/alienman5k.conf
     '';
   };
   xdg.configFile.tmux = {
