@@ -2,7 +2,7 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       font = {
         size = 14.0;
@@ -37,7 +37,7 @@
     # enable = config.programs.alacritty.enable;
     enable = false;
     recursive = true;
-    source = ./dotFiles/alacritty;
+    source = ../dotFiles/alacritty;
     target = "alacritty";
   };
 
@@ -50,7 +50,6 @@
     package = pkgs.callPackage ./wezterm-bin.nix { };
   };
 
-  #{{{
   # Kitty
   programs.kitty = {
     enable = true;
@@ -80,19 +79,18 @@
       active_tab_background = "#710daa";
       # Window 
       hide_window_decorations = "titlebar-only";
+      window_padding_width = 1;
       # macos_titlebar_color = "system";
       macos_option_as_alt = "yes";
     };
-    extraConfig = ''
-      map cmd+plus change_font_size all +1.0
-      map cmd+equals change_font_size all +1.0
-      map cmd+minus change_font_size all -1.0
-      map cmd+0 change_font_size all 0
-      map cmd+shift+enter toggle_maximized
-      map ctrl+enter toggle_maximized
-    '';
+    keybindings = {
+      "ctrl+enter"  = "toggle_maximized";
+      "cmd+plus"   = "change_font_size all +1.0";
+      "cmd+equals" = "change_font_size all +1.0";
+      "cmd+minus"  = "change_font_size all -1.0";
+      "cmd+0"      = "change_font_size all 0";
+    };
   };
-  #}}}
 
   #Tmux https://github.com/tmux/tmux/wiki
   programs.tmux = {
@@ -137,25 +135,13 @@
       bind -r P swap-window -t -1 \; previous-window
 
       # alienman5k theme
-      set-option -g message-command-style bg=colour0,fg=colour7
-      set-option -g message-style bg=colour0,fg=colour7
-      set-option -g mode-style bg=colour1
-      set-option -g status-justify left
-      set-option -g status-left "  #{=28:session_name}  "
-      set-option -g status-left-length 32
-      set-option -g status-left-style "bg=colour10,fg=#000000,italics,bold"
-      set-option -g status-right ""
-      set-option -g status-justify centre
-      # set-option -g status-right-style "bg=colour0"
-      # set-option -g status-style "bg=#1b2229,fg=#bbc2cf"
-      set-option -g status-style "bg=colour0,fg=colour7"
-      set-option -g window-status-current-format " [#I] #W "
-      #set-option -g window-status-current-style "bg=#51afef,fg=#282c34"
-      set-option -g window-status-current-style "bg=colour4,fg=#000000,bold"
-      set-option -g window-status-format " [#I] #W "
-      set-option -g window-status-separator ""
-      set-option -g window-status-style "bg=colour0,fg=colour15,bold,fill=colour0"
-      set-option -g window-status-last-style "italics"
+      source ./themes/alienman5k.conf
     '';
+  };
+  xdg.configFile.tmux = {
+    enable = config.programs.tmux.enable;
+    recursive = true;
+    source = ../dotFiles/tmux;
+    target = "tmux";
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, ... }:
 {
   # nixpkgs. = [
   #   (import (builtins.fetchTarball {
@@ -10,10 +10,11 @@
     enable = true;
     defaultEditor = true;
   };
-
+  # Only link neovim config files if the program is enabled
   xdg.configFile.nvim = {
+    enable = config.programs.neovim.enable;
     recursive = true;
-    source = ./dotFiles/nvim;
+    source = ../dotFiles/nvim;
     target = "nvim";
   };
 
@@ -38,14 +39,13 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs29;
     extraPackages = epkgs: [
       epkgs.catppuccin-theme
       epkgs.consult
       epkgs.corfu
       epkgs.doom-themes
       epkgs.ef-themes
-      epkgs.eglot
+      # epkgs.eglot
       epkgs.evil 
       epkgs.evil-collection
       epkgs.evil-commentary
@@ -64,6 +64,9 @@
       epkgs.rainbow-delimiters
       epkgs.rust-mode
       epkgs.tempel
+      epkgs.tempel-collection
+      epkgs.eglot-tempel
+      epkgs.eglot-java
       # epkgs.tree-sitter
       # epkgs.tree-sitter-langs
       epkgs.use-package
@@ -71,6 +74,7 @@
       epkgs.vterm
       epkgs.which-key
     ];
+    # extraConfig = builtins.readFile ./dotFiles/emacs/init.el;
     # package = pkgs.emacsMacport;
     # extraConfig = ''
     #   (defvar am5k/emacs-config-file
@@ -79,10 +83,10 @@
     #   (org-babel-load-file am5k/emacs-config-file)
     # '';
   };
-
-  # home.file.emacs = {
-  #   recursive = true;
-  #   source = ./dotFiles/emacs;
-  #   target = ".emacs.d";
-  # };
+  # init.el is only linked if emacs is enabled
+  home.file.emacs = {
+    enable = config.programs.emacs.enable;
+    source = ../dotFiles/emacs/init.el;
+    target = ".emacs.d/init.el";
+  };
 }

@@ -45,8 +45,9 @@
     (nerdfonts.override {
       fonts = [ "FiraCode" "JetBrainsMono" "IBMPlexMono" ];
     })
-
     #End Fonts
+    # Custom Derivations
+    (callPackage ./derivations/bruno-bin.nix { })
   ];
 
   programs.git = {
@@ -112,14 +113,15 @@
     homedir = "${config.xdg.dataHome}/gnupg";
   };
 
+
   imports = [
-    ./dev/java.nix
-    ./dev/rust.nix
-    ./dev/go.nix
-    ./dev/js.nix
-    ./dev/others.nix
-    ./shells.nix
-    ./editors.nix
-    ./terminals.nix
+    ./modules/dev/java.nix
+    ./modules/dev/rust.nix
+    ./modules/dev/go.nix
+    ./modules/dev/js.nix
+    ./modules/dev/others.nix
+    ./modules/shells.nix
+    ./modules/editors.nix
+    ./modules/terminals.nix
   ];
 }

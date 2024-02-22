@@ -63,7 +63,7 @@
   };
 
   home.file.".config/zsh/plugins" = {
-    source = ./dotFiles/zsh/plugins;
+    source = ../dotFiles/zsh/plugins;
     recursive = true;
   };
 
