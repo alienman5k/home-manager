@@ -5,7 +5,7 @@ local function lspconfig_setup()
   local _loaded, lspconfig = pcall(require, 'lspconfig')
   if _loaded then
     lspconfig.jdtls.setup({
-      cmd = { 'jdt-language-server' }
+      cmd = { 'jdtls' }
     })
   end
 end
@@ -56,7 +56,7 @@ local function jdtls_setup()
   -- Configuration to pass to the LSP Client when a Java file is open
   local config = {
     cmd = {
-      home .. '/.nix-profile/bin/jdt-language-server',
+      home .. '/.nix-profile/bin/jdtls',
       '-data', workspace_dir
     },
     root_dir = require('jdtls.setup').find_root({ '.git', 'pom.xml', 'build.xml', 'mvnw', 'gradlew' }),
