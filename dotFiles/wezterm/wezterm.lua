@@ -114,7 +114,8 @@ local set_tab_title = wezterm.action.PromptInputLine {
 -- end)
 
 -- config.color_scheme = 'Gruvbox Dark'
-config.color_scheme = 'Catppuccin Mocha'
+-- config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = 'TomorrowNight (Gogh)'
 -- Font Configuration
 config.font_size = 14
 config.adjust_window_size_when_changing_font_size = false

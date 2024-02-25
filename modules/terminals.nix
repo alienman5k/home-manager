@@ -2,7 +2,7 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       font = {
         size = 14.0;
@@ -33,21 +33,14 @@
       scrolling.history = 10000;
     };
   };
-  xdg.configFile.alacritty = {
-    # enable = config.programs.alacritty.enable;
-    enable = false;
-    recursive = true;
-    source = ../dotFiles/alacritty;
-    target = "alacritty";
-  };
 
   # Wezterm
   programs.wezterm = {
-    enable = false;
+    enable = true;
     enableBashIntegration = false;
     enableZshIntegration = false;
-    extraConfig = builtins.readFile ./dotFiles/wezterm/wezterm.lua;
-    package = pkgs.callPackage ./wezterm-bin.nix { };
+    extraConfig = builtins.readFile ../dotFiles/wezterm/wezterm.lua;
+    package = pkgs.callPackage ../derivations/wezterm-bin.nix { };
   };
 
   # Kitty
