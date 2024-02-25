@@ -48,6 +48,7 @@
     #End Fonts
     # Custom Derivations
     (callPackage ./derivations/bruno-bin.nix { })
+    (callPackage ./derivations/librewolf-bin.nix { })
   ];
 
   programs.git = {
@@ -111,6 +112,17 @@
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
+  };
+
+  programs.librewolf = {
+    enable = false; # Not supported on Darwin
+    package = ./derivations/librewolf-bin.nix;
+    settings = {
+      "identity.fxaccounts.enabled" = true;
+      "privacy.clearOnShutdown.history" = false;
+      "privacy.clearOnShutdown.downloads" = true;
+      "browser.sessionstore.resume_from_crash" = true;
+    };
   };
 
 
