@@ -5,6 +5,14 @@
   # paths it should manage.
   home.username = "imarmole";
   home.homeDirectory = "/Users/imarmole";
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
+  home.shellAliases = {
+    ll = "ls -ltrhGF";
+    lla = "ls -altrhGF";
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -22,6 +30,7 @@
   # Home Manage Search Options link: https://mipmip.github.io/home-manager-option-search/
 
   home.packages = with pkgs; [
+    browserpass
     eza
     fd
     fzf
@@ -46,9 +55,6 @@
       fonts = [ "FiraCode" "JetBrainsMono" "IBMPlexMono" ];
     })
     #End Fonts
-    # Custom Derivations
-    (callPackage ./derivations/bruno-bin.nix { })
-    (callPackage ./derivations/librewolf-bin.nix { })
   ];
 
   programs.git = {
@@ -135,5 +141,6 @@
     ./modules/shells.nix
     ./modules/editors.nix
     ./modules/terminals.nix
+    ./modules/macos.nix
   ];
 }
