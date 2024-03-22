@@ -17,11 +17,7 @@ export XDG_STATE_HOME=$HOME/.local/state
 export FACP_SSH_HOME=$HOME/DevProjects/scripts/faaas_ssh_configs
 
 ## Aliases
-alias ll='ls -ltrhGF'
-alias lla='ls -altrhGF'
 alias docker=podman
-alias vi="nvim"
-alias v="nvim"
 alias vop='fd | fzf-tmux -p | xargs $EDITOR'
 alias vo='fd | fzf-tmux | xargs $EDITOR'
 # https://www.atlassian.com/git/tutorials/dotfiles

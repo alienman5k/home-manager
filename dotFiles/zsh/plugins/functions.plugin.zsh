@@ -10,10 +10,10 @@ function proxy_on() {
   export ALL_PROXY=$HTTP_PROXY
   export NO_PROXY="localhost,127.0.0.1,*.$USERDNSDOMAIN"
 
-  if type "git" > /dev/null; then
-    echo "Proxy set for git"
-    git config --global http.proxy $HTTP_PROXY
-  fi
+  # if type "git" > /dev/null; then
+  #   echo "Proxy set for git"
+  #   git config --global http.proxy $HTTP_PROXY
+  # fi
 
   echo -e "Proxy set to $HTTP_PROXY"
 }
@@ -23,10 +23,10 @@ function proxy_off() {
   proxy=("HTTP_PROXY" "HTTPS_PROXY" "FTP_PROXY" "ALL_PROXY" "NO_PROXY")
   for i in "${proxy[@]}"; do unset $i; done
 
-  if type "git" > /dev/null; then
-    echo "Proxy unset for git"
-    git config --global --unset http.proxy
-  fi
+  # if type "git" > /dev/null; then
+  #   echo "Proxy unset for git"
+  #   git config --global --unset http.proxy
+  # fi
 
   echo -e "Proxy settings removed"
 }
