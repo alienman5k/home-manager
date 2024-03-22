@@ -1,14 +1,10 @@
 { config, ... }:
 {
-  # nixpkgs. = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  #   }))
-  # ];
 
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    viAlias = true;
   };
   # Only link neovim config files if the program is enabled
   xdg.configFile.nvim = {
@@ -61,6 +57,9 @@
       # epkgs.ob-mermaid
       epkgs.orderless
       epkgs.org-contrib
+      epkgs.org-roam
+			# epkgs.password-store
+			# epkgs.password-store-otp
       epkgs.rainbow-delimiters
       epkgs.rust-mode
       epkgs.tempel

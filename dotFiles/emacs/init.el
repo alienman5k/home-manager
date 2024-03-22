@@ -137,6 +137,10 @@
    ;; "hk" 'helpful-key
    ;; "ho" 'helpful-symbol
    ;; "hv" 'helpful-variable
+	 "o" '(:ignore t :which-key "Org Roam")
+	 "ot" 'org-roam-buffer-toggle
+   "of" 'org-roam-node-find
+   "oi" 'org-roam-node-insert
    "s" '(:keymap search-map :which-key "Search")
    ;; "s" '(:ignore t :which-key "Search")
    "sl" 'consult-line
@@ -203,7 +207,7 @@
   :hook
   (rust-mode . eglot-ensure)
   (lua-mode . eglot-ensure)
-  (java-mode . eglot-ensure)
+  ;; (java-mode . eglot-ensure)
   (json-mode . eglot-ensure)
   (json-ts-mode . eglot-ensure)
   (nix-mode . eglot-ensure)
@@ -214,7 +218,7 @@
 	      ("C-c h" . eldoc)
 	      ("<f6>" . xref-find-definitions))
   :config
-  (add-to-list 'eglot-server-programs `((java-mode java-ts-mode) . ("jdt-language-server" "-data" ,(concat "/Users/imarmole/.cache/eglot/" (am5k/get-project-name) "/" ))))
+  (add-to-list 'eglot-server-programs `((java-mode java-ts-mode) . ("jdtls" "-data" ,(concat "/Users/imarmole/.cache/eglot/" (am5k/get-project-name) "/" ))))
   )
 
 (use-package java-mode
@@ -316,7 +320,10 @@
   ;; :custom
   ;; (tempel-trigger-prefix "<")
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
-         ("M-*" . tempel-insert))
+         ("M-*" . tempel-insert)
+				 :map tempel-map
+				 ("C-j" . tempel-next)
+				 ("C-k" . tempel-previous))
   :init
   ;; Setup completion at point
   (defun tempel-setup-capf ()
@@ -351,3 +358,14 @@
 	:hook
 	(vterm-mode . (lambda() (display-line-numbers-mode 0))))
 
+
+(use-package org-roam
+  :custom 
+  (org-roam-directory "~/RoamNotes")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n C-l" . org-store-link)
+         ("C-c n l" . org-insert-link))
+  :config
+  (org-roam-setup))
