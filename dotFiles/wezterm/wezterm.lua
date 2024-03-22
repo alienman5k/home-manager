@@ -52,9 +52,42 @@ local function toggle_opacity(window)
   overrides.macos_window_background_blur = defaults.blur
   window:set_config_overrides(overrides)
 end
-
 wezterm.on('toggle-opacity', toggle_opacity)
 
+local function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane
+  -- in that tab
+  return tab_info.active_pane.title
+end
+wezterm.on(
+  'format-tab-title',
+  -- function(tab, tabs, panes, cfg, hover, max_width)
+  function(tab)
+    local title = tab_title(tab)
+    -- local title = "active"
+    if tab.is_active then
+      return {
+        { Background = { Color = '#4b0f87' } },
+        -- { Foreground = { Color = '#FFFFFF' } },
+        -- { Text = ' ' .. title .. ' ' .. wezterm.nerdfonts.pl_right_hard_divider },
+        { Text = string.format(" %s: %s ", tab.tab_id + 1, title) },
+      }
+    elseif tab.is_inactive then
+      return {
+        { Background = { Color = '#333333' } },
+        -- { Foreground = { Color = '#FFFFFF' } },
+        -- { Text = ' ' .. title .. ' ' .. wezterm.nerdfonts.pl_right_hard_divider },
+        { Text = string.format(" %s ", title) },
+      }
+    end
+    return title
+  end
+)
 
 -- wezterm.on('toggle-colorscheme', function (window, _)
 --   if defaults.current_color_index < #defaults.color_schemes then
@@ -142,8 +175,8 @@ config.force_reverse_video_cursor = true
 config.window_frame = {
   font = wezterm.font { family = 'Fira Mono', weight = 'Bold' },
   font_size = 12,
-  -- active_titlebar_bg = '#333333',
-  -- inactive_titlebar_bg = '#FFFFFF',
+  -- active_titlebar_bg = '#683478',
+  -- inactive_titlebar_bg = '#333333',
 }
 
 -- Keybindings
