@@ -8,7 +8,7 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "Bruno";
-  version = "1.9.0";
+  version = "1.11.0";
 
   phases = ["installPhase"];
   installPhase = ''
