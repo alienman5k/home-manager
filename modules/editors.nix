@@ -36,6 +36,7 @@
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [
+      epkgs.cape
       epkgs.catppuccin-theme
       epkgs.consult
       epkgs.corfu
