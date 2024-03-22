@@ -4,7 +4,7 @@
     enable = true;
     dotDir = ".config/zsh";
     defaultKeymap = "emacs";
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     history = {
       path = "${config.xdg.dataHome}/zsh/zsh_history";
@@ -37,7 +37,6 @@
 
     initExtra = ''
       bindkey "^[[3~" delete-char
-      PATH=$PATH:$HOME/bin
       WORDCHARS=""
       if [[ -f "$HOME/.config/zsh/plugins/functions.plugin.zsh" ]]; then
         source $HOME/.config/zsh/plugins/functions.plugin.zsh
