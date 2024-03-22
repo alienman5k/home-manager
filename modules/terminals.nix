@@ -2,7 +2,7 @@
 {
   # Alacritty
   programs.alacritty = {
-    enable = false;
+    enable = true;
     settings = {
       font = {
         size = 14.0;
@@ -77,11 +77,12 @@
       macos_option_as_alt = "yes";
     };
     keybindings = {
-      "ctrl+enter"  = "toggle_maximized";
-      "cmd+plus"   = "change_font_size all +1.0";
+      "ctrl+enter" = "toggle_maximized";
+      "cmd+plus" = "change_font_size all +1.0";
       "cmd+equals" = "change_font_size all +1.0";
-      "cmd+minus"  = "change_font_size all -1.0";
-      "cmd+0"      = "change_font_size all 0";
+      "cmd+minus" = "change_font_size all -1.0";
+      "cmd+0" = "change_font_size all 0";
+      "cmd+shift+i" = "set_tab_title"; # Default in mac but I tend to forget the mapping
     };
   };
 
@@ -118,10 +119,14 @@
       set-option -g renumber-windows on
 
       # vim-like pane switching
-      bind -r k select-pane -U 
-      bind -r j select-pane -D 
-      bind -r h select-pane -L 
-      bind -r l select-pane -R 
+      bind -r C-k select-pane -U
+      bind -r C-j select-pane -D
+      bind -r C-h select-pane -L
+      bind -r C-l select-pane -R
+
+      # Change Next and Previous windows to be repeatable
+      bind -r C-n next-window
+      bind -r C-p previous-window
 
       # Switch windows
       bind -r N swap-window -t +1 \; next-window
