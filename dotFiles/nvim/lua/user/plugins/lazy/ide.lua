@@ -8,38 +8,6 @@ return {
       require("Comment").setup()
     end
   },
-  -- Language Servers Configurations
-  {
-    "neovim/nvim-lspconfig", -- Neovim collection of Language Server configurations
-    config = function()
-       require("user.plugins.setup.lsp-setup").lsp_setup()
-    end,
-    dependencies = {
-      -- Debug Adapter Protocol
-      {
-        "mfussenegger/nvim-dap", -- LSP Debugging
-        enabled = true,
-        config = function()
-          require("user.plugins.setup.lsp-setup").dap_setup()
-        end,
-        dependencies = {
-          {
-            "rcarriga/nvim-dap-ui",
-            enabled = true,
-            config = function ()
-              require("dapui").setup()
-            end
-          }
-        },
-      },
-    },
-  },
-  -- LspConfig with jdtls does not implement all Java LS features, JDTLS does
-  {
-    "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
-    enabled = true,
-    ft = "java", -- Setup is handled when java file is open in jdtls-setup.lua
-  },
   -- Java Decompiler
   -- {
   --   "alienman5k/jdecomp.nvim",
@@ -91,5 +59,40 @@ return {
     opts = {
       -- configurations go here
     },
+  },
+  -- Language Servers Configurations
+  {
+    "neovim/nvim-lspconfig", -- Neovim collection of Language Server configurations
+    config = function()
+       require("user.plugins.setup.lsp-setup").lsp_setup()
+    end,
+    dependencies = {
+      {
+        "rcarriga/nvim-dap-ui",
+        enabled = true,
+        config = function ()
+          require("dapui").setup()
+        end,
+        dependencies = {
+          -- Debug Adapter Protocol
+          {
+            "nvim-neotest/nvim-nio"
+          },
+          {
+            "mfussenegger/nvim-dap", -- LSP Debugging
+            enabled = true,
+            config = function()
+              require("user.plugins.setup.lsp-setup").dap_setup()
+            end
+          }
+        }
+      }
+    }
+  },
+  -- LspConfig with jdtls does not implement all Java LS features, JDTLS does
+  {
+    "mfussenegger/nvim-jdtls", -- For a more complete Java LSP Experience (Using Eclipse LSP)
+    enabled = true,
+    ft = "java", -- Setup is handled when java file is open in jdtls-setup.lua
   },
 }
