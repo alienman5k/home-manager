@@ -8,7 +8,13 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "Bruno";
-  version = "1.11.0";
+  version = "1.12.2";
+
+  src = pkgs.fetchzip {
+    url = "https://github.com/usebruno/bruno/releases/download/v${version}/bruno_${version}_x64_mac.zip";
+    sha256 = "sha256-A1SJOAaqz/tKtjAbaqeALmW0L8IhzHimNccTM37tHt8=";
+    # sha256 = lib.fakeSha256;
+  };
 
   phases = ["installPhase"];
   installPhase = ''
@@ -16,18 +22,12 @@ pkgs.stdenv.mkDerivation rec {
     cp -avi $src/Contents $out/Applications/${pname}.app/
   '';
 
-  src = pkgs.fetchzip {
-    url = "https://github.com/usebruno/bruno/releases/download/v${version}/bruno_${version}_x64_mac.zip";
-    sha256 = "sha256-5nINOzmHfDr4kZJG/OIadkaYzy9DyT3IehAFgxTvz1o=";
-    # sha256 = lib.fakeSha256;
-  };
-
-  meta = with lib; {
+  meta = {
     description = "Bruno is a Fast and Git-Friendly Opensource API client, aimed at revolutionizing the status quo represented by Postman, Insomnia and similar tools out there.";
     homepage = "https://www.usebruno.com/";
-    license = licenses.mit;
+    license = lib.licenses.mit;
     mainProgram = "bruno";
-    maintainers = with maintainers; [ alienman5k ];
+    maintainers = with lib.maintainers; [ alienman5k ];
   };
 
   platforms = lib.platforms.darwin;
