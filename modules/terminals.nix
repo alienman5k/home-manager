@@ -36,7 +36,7 @@
 
   # Wezterm
   programs.wezterm = {
-    enable = true;
+    enable = false;
     enableBashIntegration = false;
     enableZshIntegration = false;
     extraConfig = builtins.readFile ../dotFiles/wezterm/wezterm.lua;
