@@ -55,6 +55,8 @@
       fonts = [ "FiraCode" "JetBrainsMono" "IBMPlexMono" ];
     })
     #End Fonts
+    # Spell checking and dictionaries
+    (aspellWithDicts (dicts: with dicts; [ en en-computers es ]))
   ];
 
   programs.git = {

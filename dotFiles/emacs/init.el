@@ -71,6 +71,7 @@
 ;;; Customize org-mode
 (use-package org
   :mode (("\\.org$" . org-mode))
+	:hook ((org-mode . flyspell-mode))
   ;;:ensure org-plus-contrib
 	:init
 	(custom-theme-set-faces
