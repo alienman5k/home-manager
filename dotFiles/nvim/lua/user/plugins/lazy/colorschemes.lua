@@ -15,6 +15,8 @@ return {
   {
     'ellisonleao/gruvbox.nvim',
     enabled = true,
+    lazy = false,
+    priority = 1000,
     opts = {
       -- contrast = 'soft',
       transparent_mode = false,
@@ -31,6 +33,7 @@ return {
   },
   {
     'folke/tokyonight.nvim',
+    enabled = true,
     opts = {
       style = 'night',
       transparent = false,

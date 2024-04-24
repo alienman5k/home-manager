@@ -3,26 +3,29 @@
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "imarmole";
-  home.homeDirectory = "/Users/imarmole";
-  home.sessionPath = [
-    "$HOME/.local/bin"
-  ];
+  home = {
+    username = "imarmole";
+    homeDirectory = "/Users/imarmole";
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
-  home.shellAliases = {
-    ll = "ls -ltrhGF";
-    lla = "ls -altrhGF";
+    shellAliases = {
+      ll = "ls -ltrhGF";
+      lla = "ls -altrhGF";
+      ".." = "cd ..";
+    };
+
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    stateVersion = "22.11";
   };
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "22.11";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -132,7 +135,6 @@
       "browser.sessionstore.resume_from_crash" = true;
     };
   };
-
 
   imports = [
     ./modules/dev/java.nix
